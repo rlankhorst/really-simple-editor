@@ -7,19 +7,28 @@ Version: 1.0.0
 Author: RogierLankhorst, willemvanderveen
 */
 
-//plugins_loaded
+
+// developement functions
+
+require_once 'developementUtils.php';
 
 
 defined( 'ABSPATH' ) or die( 'no access' );
-
-// is user logged in else exit
 
 
 register_activation_hook( __FILE__ , 'rsed_activate' );
 register_deactivation_hook(__FILE__, 'rsed_deactivate');
 
-function rsed_activate () {
 
+function rsed_activate () {
+    // add_action('admin_menu', 'rsed_initialSetup');
+
+    // error_log(454554);
+   add_action('admin_init', 'rsed_init');
+}
+
+function rsed_init () {
+    // $rsed_Master::$BackendSettings->parse_CMB2_boxes;
 }
 
 
@@ -28,19 +37,28 @@ function rsed_deactivate () {
 }
 
 
+
 class rsed_Master {
 
-    public $alterContent;
+    static public $alterContent;
+    static public $BackendSettings;
 
     function __construct() {
 
-        define('rsed_plugin', plugins_url() . '/Really_simple_editor');
+        define('rsed_plugin', plugin_dir_url(__FILE__));
         define('rsed_js', rsed_plugin . '/assets/js/');
         define('rsed_css', rsed_plugin . '/assets/css/');
 
         require_once 'core/alterContent.php';
+        require_once 'admin/backendSettings.php';
 
-        $this->alterContent  = new rsed_alterContent();
+        if (  !is_admin() ) {
+            $this->alterContent  = new rsed_alterContent();
+        }
+
+        if (  is_admin() ) {
+            $this->BackendSettings  = new rsed_BackendSettings();
+        }
 
     }
 
@@ -52,11 +70,12 @@ add_action( 'plugins_loaded', 'start_plugin' );
 function start_plugin () {
 
     if (current_user_can('editor') || current_user_can('administrator')) {  // can user edit a post  // check via capabilities
-        global $rsed_Master;               // static
         $rsed_Master = new rsed_Master();
     }
 
 }
+
+
 
 
 

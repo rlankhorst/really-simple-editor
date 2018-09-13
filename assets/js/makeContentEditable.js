@@ -5,18 +5,13 @@ const closeSVG = '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" dat
 // Icons from: https://fontawesome.com  
 // Licence:  https://fontawesome.com/license
 
-/// cmb2
-// is_single
-// is_singular
-// tinymc 
-// editor text styling zelfde
-// Editor min intrusive mogelijk
-
-
-const editableContent = document.querySelector('.rsed_content');
-let editButtons;
-let copyHTML;
-let normalEditor = true;
+let editableContent = {};
+let editButtons = {};
+let switchFocus;  // boolean
+let focus;        // string, values: main, meta_x
+let copyHTML;     // The original HTML before editing
+let normalEditor = true;    // if true wysiwyg is shown else the tinyMCE editor
+let tinyMCE_location = '.rsed_editable' // css selector where tinyMCE is in the DOM
 
 document.body.addEventListener('click', closeEditMode);
 checkJQuery();
@@ -24,76 +19,139 @@ checkJQuery();
 
 function checkJQuery() {
     if (jQuery) {
-        makeEditable();
+        makeContentEditable();
+        makeMetaEditable();
     } else {
         setTimeout(() => checkJQuery(), 200);
     }
 }
 
-
-function makeEditable() {
+function makeContentEditable() {
 
     jQuery("#wp-editor-wrap").appendTo(".rsed_editable");
+    
+    addEditIcons('.rsed_editable', 'main');
+    addEditableListener(`main`);
+}
 
-    jQuery(".rsed_editable").before(
+
+function makeMetaEditable () {
+    for(let i = 0; i < document.getElementsByClassName('rsed_meta_canUpdate').length; i++) {
+        
+        addEditIcons(`#rsed_${i + 1}`, (i + 1));
+        addEditableListener(`${i + 1}`);
+    }
+}
+
+
+function addEditIcons (selector, identifier) {
+    jQuery(selector).before(
         `
-        <div class="rsed_icons">
-            <div onclick="ToggleEditor()" class="rsed_editButtons rsed_editor rsed_dontClose">${editSVG}</div>
-            <div onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
-            <div class="rsed_editButtons rsed_danger">${closeSVG}</div>
+        <div class="rsed_icons_container rsed_editButtons_${identifier}">
+            <div class="rsed_icons">
+                <div onclick="ToggleEditor()" class="rsed_editButtons rsed_editor rsed_dontClose">${editSVG}</div>
+                <div onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
+                <div class="rsed_editButtons rsed_danger">${closeSVG}</div>
+            </div>
         </div>
         `
     );
+}
 
+function addEditableListener (identifier) {
 
-    if (!editButtons) {
-        editButtons = document.querySelector('.rsed_icons');
+    let context;
+
+    if ( identifier === 'main' ) {
+        editableContent['main'] = document.querySelector('.rsed_content');
+        editButtons['main'] =  document.querySelector('.rsed_editButtons_main');
+        context = 'main';
+    } else {
+        context = `meta_${identifier}`;
+        editableContent[context] = document.querySelector(`#rsed_${identifier}`);
+        editButtons[context] =  document.querySelector(`.rsed_editButtons_${identifier}`);
     }
 
 
-    editableContent.addEventListener('click', (event) => {
+    // focus>>> main, meta_1, meta_2
+    // tinyMCE moet aan>> .rsed_editable of rsed_x
+    editableContent[context].addEventListener('click', (event) => {
 
-        if (!copyHTML) {
-            copyHTML = event.target.closest(".rsed_content").innerHTML;
+        if (context === 'main') {
+            jQuery("#wp-editor-wrap").appendTo(".rsed_editable");
+        } else {
+            jQuery("#wp-editor-wrap").appendTo(`#rsed_${context.substr(5,6)}`);
         }
 
-        editableContent.contentEditable = true;
-        editableContent.style.cursor = 'auto';
-        editableContent.style.outline = '2px dashed rgb(77, 77, 77)';
-        editableContent.style.outlineOffset = '5px';
-        editButtons.style.opacity = 1;
+        if (focus && focus !== context) {
+            closeStyles(focus);
+        }
+
+
+
+        focus = context;
+
+        // copyHTML = event.target.closest(`#rsed_${identifier}`).innerHTML;
+
+        editableContent[context].contentEditable = true;
+        editableContent[context].style.cursor = 'auto';
+        editableContent[context].style.outline = '2px dashed rgb(77, 77, 77)';
+        editableContent[context].style.outlineOffset = '5px';
+        editButtons[context].style.opacity = 1;
     });
-
 }
-
 
 
 function closeEditMode(event) {
 
-    if (event.target.closest(".rsed_editable") || event.target.closest(".rsed_dontClose")) {
+    if (!focus) {
         return;
     }
 
-    editableContent.contentEditable = false;
-    editableContent.style.cursor = 'pointer';
-    editableContent.style.outline = '';
-    editableContent.style.outlineOffset = '';
-    editButtons.style.opacity = 0;
-
-    if (!normalEditor) {
-        document.querySelector('.rsed_content').style.display = 'block';
-        document.querySelector('#wp-editor-wrap').style.display = 'none';
-
-        document.querySelector('#rsed_richEditor').style.display = 'block';
-        document.querySelector('#rsed_normalEditor').style.display = 'none';
+    // First 3 if statements are conditions when NOT to close the editableness
+    if (event.target.closest(".rsed_dontClose")) {
+        return;
     }
 
+    if (focus === 'main' && event.target.closest('.rsed_content')) {
+        return;
+    }
+    
+    if (focus !== undefined && focus.indexOf('meta_') > -1) {
+        focusNr = focus.substr(5,6)
+        try {
+            if (event.target.closest(`#rsed_${focusNr}`)) {
+                return;
+            }
+        } catch (e) {}
+    }
+
+    closeStyles(focus);
+
+
+    // if (!normalEditor) {
+    //     document.querySelector('.rsed_content').style.display = 'block';
+    //     document.querySelector('#wp-editor-wrap').style.display = 'none';
+
+    //     document.querySelector('#rsed_richEditor').style.display = 'block';
+    //     document.querySelector('#rsed_normalEditor').style.display = 'none';
+    // }
+
+}
+
+
+function closeStyles (prop) {
+    editableContent[prop].contentEditable = false;
+    editableContent[prop].style.cursor = 'pointer';
+    editableContent[prop].style.outline = '';
+    editableContent[prop].style.outlineOffset = '';
+    editButtons[prop].style.opacity = 0;
 }
 
 
 function ToggleEditor() {
 
-    if(normalEditor) {
+    if (normalEditor) {
         document.querySelector('#rsed_richEditor').style.display = 'none';
         document.querySelector('#rsed_normalEditor').style.display = 'block';
 
@@ -117,14 +175,15 @@ function revertText(event) {
     document.querySelector('.rsed_content').innerHTML = copyHTML;
 
     document.querySelector('#editor_ifr').contentDocument.querySelector('#tinymce').innerHTML = copyHTML;
-    
+
 }
 
 
 
+// synchronizes the tinymce and the normal editing
 (function dataBinding () {
 
-    // setTimeout for loading Iframe
+    // setTimeout for loading tinymce Iframe
     setTimeout(() => {
         let iFrame = document.querySelector('#editor_ifr').contentDocument.body;
 
@@ -139,6 +198,14 @@ function revertText(event) {
     }, 1000);
 
 })();
+
+
+
+
+(() => {
+
+
+})()
 
 
 
