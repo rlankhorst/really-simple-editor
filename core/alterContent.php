@@ -58,7 +58,7 @@ class rsed_alterContent {
         if (!$isFieldEditable) {
             return $result[0]->meta_value;
         }
-     
+
         // each meta tag needs to have a 
         // div with a uniquely assigned ID
         $idNr = $this->metaID;
@@ -66,11 +66,13 @@ class rsed_alterContent {
 
         $this->metaID += 1;
 
-        return "<div class=\"rsed_meta_canUpdate\" id=\"" . $id . "\">" . $result[0]->meta_value . '</div>';
+        if ($isFieldEditable === 'wysiwyg') {
+            return "<div class=\"rsed_meta_canUpdate rsed_hasTinyMCE\" id=\"" . $id . "\">" . $result[0]->meta_value . '</div>' . wp_editor($post->post_content, "editor_{$idNr}", $settings);
+        } else {
+            return "<div class=\"rsed_meta_canUpdate\" id=\"" . $id . "\">" . $result[0]->meta_value . '</div>';
+        }
         
     }
-
-
 
 
 

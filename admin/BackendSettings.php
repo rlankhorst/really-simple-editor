@@ -56,11 +56,15 @@ class rsed_BackendSettings
         foreach ($fieldsArray as $fields => $fieldElements) {
             foreach ($fieldElements as $fieldElement => $field) {
 
+                $validType = null;
                 $validType = $this->assessFieldType($field['type']);
 
                 $id = $field['id'];
 
-                if ($validType) {
+                if ($validType === 'wysiwyg') {
+                    _log("rsed_{$id}");
+                    update_option("rsed_{$id}", 'wysiwyg');
+                } elseif($validType) {
                     update_option("rsed_{$id}", 'editable');
                 }
 
@@ -69,11 +73,15 @@ class rsed_BackendSettings
 
     }
 
-    // returns true if the value is inside the taxonomy field-types array
+    // returns true if the value is inside the taxonomy field-types array, else false
+    // returns special string wysiwyg to indicate that the editor is wysiwyg
     private function assessFieldType($field)
     {
-
         require __DIR__ . '/../taxonomies/field-types.php';
+
+        if ($field == 'wysiwyg') {
+            return 'wysiwyg';
+        }
 
         for ($i = 0; $i < count($rsed_field_types); $i++) {
 
