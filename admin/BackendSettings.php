@@ -6,7 +6,7 @@ class rsed_BackendSettings
     public function __construct()
     {
         add_action('admin_menu', array($this, 'extend_settings'));
-        // add_action('admin_menu', array($this, 'parse_CMB2_boxes'));
+        add_action('admin_menu', array($this, 'parse_CMB2_boxes'));
     }
 
     public function extend_settings()
@@ -26,7 +26,6 @@ class rsed_BackendSettings
     }
 
 
-    
 
     public function editor_template()
     {
@@ -62,7 +61,6 @@ class rsed_BackendSettings
                 $id = $field['id'];
 
                 if ($validType === 'wysiwyg') {
-                    _log("rsed_{$id}");
                     update_option("rsed_{$id}", 'wysiwyg');
                 } elseif($validType) {
                     update_option("rsed_{$id}", 'editable');

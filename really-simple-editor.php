@@ -22,8 +22,6 @@ register_deactivation_hook(__FILE__, 'rsed_deactivate');
 
 function rsed_activate () {
     // add_action('admin_menu', 'rsed_initialSetup');
-
-    // error_log(454554);
    add_action('admin_init', 'rsed_init');
 }
 
@@ -35,7 +33,6 @@ function rsed_init () {
 function rsed_deactivate () {
     
 }
-
 
 
 class rsed_Master {
@@ -65,18 +62,15 @@ class rsed_Master {
 }
 
 
-add_action( 'plugins_loaded', 'start_plugin' );
+add_action( 'plugins_loaded', 'start_plugin',9,1);
 
 function start_plugin () {
 
-    if (current_user_can('editor') || current_user_can('administrator')) {  // can user edit a post  // check via capabilities
+   if (current_user_can('editor') || current_user_can('administrator')) {  // can user edit a post  // check via capabilities
         $rsed_Master = new rsed_Master();
-    }
+   }
 
 }
-
-
-
 
 
 // https://github.com/rlankhorst/complianz-gdpr

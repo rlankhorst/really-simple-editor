@@ -1,5 +1,5 @@
 const editSVG = `<svg  class="rsed_normalEditor" aria-hidden="true" data-prefix="fas" data-icon="pencil-alt" class="svg-inline--fa fa-pencil-alt fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" ><path fill="currentColor" d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"></path></svg>
-                <svg  class="rsed_richEditor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas" data-icon="edit" class="svg-inline--fa fa-edit fa-w-18" role="img" viewBox="0 0 576 512"><path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"/></svg>`;
+    <svg  class="rsed_richEditor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas" data-icon="edit" class="svg-inline--fa fa-edit fa-w-18" role="img" viewBox="0 0 576 512"><path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"/></svg>`;
 const backArrowSVG = '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas" data-icon="undo-alt" class="svg-inline--fa fa-undo-alt fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M255.545 8c-66.269.119-126.438 26.233-170.86 68.685L48.971 40.971C33.851 25.851 8 36.559 8 57.941V192c0 13.255 10.745 24 24 24h134.059c21.382 0 32.09-25.851 16.971-40.971l-41.75-41.75c30.864-28.899 70.801-44.907 113.23-45.273 92.398-.798 170.283 73.977 169.484 169.442C423.236 348.009 349.816 424 256 424c-41.127 0-79.997-14.678-110.63-41.556-4.743-4.161-11.906-3.908-16.368.553L89.34 422.659c-4.872 4.872-4.631 12.815.482 17.433C133.798 479.813 192.074 504 256 504c136.966 0 247.999-111.033 248-247.998C504.001 119.193 392.354 7.755 255.545 8z"/></svg>'
 const closeSVG = '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="far" data-icon="times-circle" class="svg-inline--fa fa-times-circle fa-w-16" role="img" viewBox="0 0 512 512" ><path   fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm101.8-262.2L295.6 256l62.2 62.2c4.7 4.7 4.7 12.3 0 17l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L256 295.6l-62.2 62.2c-4.7 4.7-12.3 4.7-17 0l-22.6-22.6c-4.7-4.7-4.7-12.3 0-17l62.2-62.2-62.2-62.2c-4.7-4.7-4.7-12.3 0-17l22.6-22.6c4.7-4.7 12.3-4.7 17 0l62.2 62.2 62.2-62.2c4.7-4.7 12.3-4.7 17 0l22.6 22.6c4.7 4.7 4.7 12.3 0 17z"/></svg>';
 // Icons from: https://fontawesome.com  
@@ -10,23 +10,21 @@ let editButtons = {};        // object with as properties all the wrapper div DO
 let focus;                   // string, values: main, meta_x
 let backupHTML = {};         // The original HTML of all fields before editing, first element is the main text, remainder are the meta elements
 let normalEditor = true;     // if true wysiwyg is shown else the tinyMCE editor
+const saveTime = 1000;       // time in Ms when the changes are saved after the user is done typing
 
-document.body.addEventListener('click', closeEditMode);
-checkJQuery();
+jQuery(document).ready(() => {
 
-
-function checkJQuery() {
-    if (jQuery) {
+    // initialize the functionality here
+    if (document.querySelector('.rsed_editable')) {
+        document.body.addEventListener('click', closeEditMode);
         createBackup();
         makeContentEditable();
         makeMetaEditable();
-    } else {
-        setTimeout(() => checkJQuery(), 200);
     }
-}
+});
+
 
 function createBackup() {
-    // first element is the main text, so [0] is hardcoded
     backupHTML['main'] = document.querySelector('.rsed_content').innerHTML;
 
     // for every meta element with wysiswyg we need to store the html
@@ -80,25 +78,25 @@ function addEditIcons(selector, identifier, noTinyMCE) {
     if (noTinyMCE) {
         jQuery(selector).before(
             `
-            <div class="rsed_icons_container rsed_editButtons_${identifier}">
-                <div class="rsed_icons rsed_icons_noTinyMCE">
-                    <div onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
-                    <div class="rsed_editButtons rsed_danger">${closeSVG}</div>
-                </div>
-            </div>
-            `
+<div class="rsed_icons_container rsed_editButtons_${identifier}">
+    <div class="rsed_icons rsed_icons_noTinyMCE">
+        <div onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
+        <div class="rsed_editButtons rsed_danger">${closeSVG}</div>
+    </div>
+</div>
+`
         );
     } else {
         jQuery(selector).before(
             `
-            <div class="rsed_icons_container rsed_editButtons_${identifier}">
-                <div class="rsed_icons">
-                    <div onclick="ToggleEditor()" class="rsed_editButtons rsed_editor rsed_dontClose">${editSVG}</div>
-                    <div onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
-                    <div class="rsed_editButtons rsed_danger">${closeSVG}</div>
-                </div>
-            </div>
-            `
+<div class="rsed_icons_container rsed_editButtons_${identifier}">
+    <div class="rsed_icons">
+        <div onclick="ToggleEditor()" class="rsed_editButtons rsed_editor rsed_dontClose">${editSVG}</div>
+        <div onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
+        <div class="rsed_editButtons rsed_danger">${closeSVG}</div>
+    </div>
+</div>
+`
         );
     }
 
@@ -165,8 +163,6 @@ function closeEditMode(event) {
             }
         } catch (e) { }
     }
-
-
 
     closeStyles(focus);
     selectNormalEditor();
@@ -266,55 +262,195 @@ function revertText() {
     } else {
         const id = focus.substring(5);
         document.querySelector(`#rsed_${id}`).innerHTML = backupHTML[`rsed_${id}`];
-        document.querySelector(`#editor_${id}_ifr`).contentDocument.body.innerHTML = backupHTML[`rsed_${id}`];
+        if (document.querySelector(`#editor_${id}_ifr`)) {
+            document.querySelector(`#editor_${id}_ifr`).contentDocument.body.innerHTML = backupHTML[`rsed_${id}`];
+        }
     }
 
 }
 
 
-
-// synchronizes the tinymce and the normal editing
-(() => {
-
-    // setTimeout is required for loading the Iframes. Otherwise we would
-    // get a referenceError for trying ot access non existing DOM elements
-    setTimeout(() => {
-
-        // main text 2 way data binding:
-        let iFrame = document.querySelector('#editor_ifr').contentDocument.body;
-        iFrame.innerText = document.querySelector('.rsed_content').innerText;
-
-        iFrame.addEventListener('keyup', () => {
-            document.querySelector('.rsed_content').innerText = iFrame.innerText;
-        });
-
-        document.querySelector('.rsed_content').addEventListener('keyup', () => {
-            iFrame.innerText = document.querySelector('.rsed_content').innerText;
-        });
-
-        // other meta tags 2 way data binding:
-        const elements = document.querySelectorAll('.rsed_hasTinyMCE');
-
-        for (let i = 0; i < elements.length; i++) {
-
-            const id = elements[i].id.substring(5,6);
-            let iFrame = document.querySelector(`#editor_${id}_ifr`).contentDocument.body;
-            iFrame.innerText = document.querySelector(`#rsed_${id}`).innerText;
-
-            iFrame.addEventListener('keyup', () => {
-                document.querySelector(`#rsed_${id}`).innerText = iFrame.innerText;
-            });
-    
-            document.querySelector(`#rsed_${id}`).addEventListener('keyup', () => {
-                iFrame.innerText = document.querySelector(`#rsed_${id}`).innerText;
-            });
-        }
-
-    }, 1500);
-
+// delay function utility:
+const delay = (() => {
+    let timer = 0;
+    return function (callback, ms) {
+        clearTimeout(timer);
+        timer = setTimeout(callback, ms);
+    };
 })();
 
 
+
+// Has the following funtionality
+// 1) synchronizes the tinymce and the normal editing
+// 2) does the Ajax call to the backend to autoSave the data
+
+jQuery(document).ready(() => {
+
+    if (document.querySelector('.rsed_editable')) {
+
+        // setTimeout is required for loading the Iframes. Otherwise we would
+        // get a referenceError for trying to access non existing DOM elements
+        setTimeout(() => {
+
+            // main text 2 way data binding/auto saving:
+            let iFrame = document.querySelector('#editor_ifr').contentDocument.body;
+            iFrame.innerHTML = document.querySelector('.rsed_content').innerHTML;
+
+            iFrame.addEventListener('keyup', () => {
+                const html = iFrame.innerHTML
+                document.querySelector('.rsed_content').innerHTML = html;
+                delay(() => {
+                    autoSave_mainText(html);
+                }, 500);
+            });
+
+            document.querySelector('#editor').addEventListener('keyup', () => {
+                const html = document.querySelector('#editor').value;
+                document.querySelector('.rsed_content').innerHTML = html;
+                delay(() => {
+                    autoSave_mainText(html);
+                }, 500);
+            });
+
+            document.querySelector('.rsed_content').addEventListener('keyup', () => {
+                const html = document.querySelector('.rsed_content').innerHTML;
+                iFrame.innerHTML = html;
+                delay(() => {
+                    autoSave_mainText(html);
+                }, 500);
+            });
+
+            // other meta tags with tinyMCE 2 way data binding/autosaving:
+            const elements = document.querySelectorAll('.rsed_hasTinyMCE');
+            const ID_List_with_tinyMCE = []; // list of id's of meta fields with tinyMCE editors 
+
+            for (let i = 0; i < elements.length; i++) {
+
+                const id = elements[i].id.substring(5, 6);
+                ID_List_with_tinyMCE.push(id);
+
+                const iFrame = document.querySelector(`#editor_${id}_ifr`).contentDocument.body;
+                iFrame.innerHTML = document.querySelector(`#rsed_${id}`).innerHTML;
+                const meta_element = document.querySelector(`#rsed_${id}`);
+
+                const [metaKey, postID] = getMetaData(meta_element);
+
+                iFrame.addEventListener('keyup', () => {
+                    const html = iFrame.innerHTML;
+                    document.querySelector(`#rsed_${id}`).innerHTML = html;
+                    delay(() => {
+                        autoSave_meta(html, metaKey, postID);
+                    }, 500);
+                });
+
+                document.querySelector(`#editor_${id}`).addEventListener('keyup', () => {
+                    const html = document.querySelector(`#editor_${id}`).value;
+                    document.querySelector(`#rsed_${id}`).innerHTML = html;
+                    delay(() => {
+                        autoSave_mainText(html);
+                    }, 500);
+                });
+
+                document.querySelector(`#rsed_${id}`).addEventListener('keyup', () => {
+                    const html = document.querySelector(`#rsed_${id}`).innerHTML;
+                    iFrame.innerHTML = html;
+                    delay(() => {
+                        autoSave_meta(html, metaKey, postID);
+                    }, 500);
+                });
+            }
+
+            // meta tags without tinyMCE autosaving
+            const meta_without_tinyMCE = []; // DOM meta wrapping div elements without tinyMCE
+
+            for (let el of document.querySelectorAll('.rsed_meta_canUpdate')) {
+                meta_without_tinyMCE.push(el);
+
+                for (let i = 0; i < ID_List_with_tinyMCE.length; i++) {
+                    if (el.id.substring(5, 6) === ID_List_with_tinyMCE[i]) {
+                        meta_without_tinyMCE.pop();
+                        break;
+                    }
+                }
+            }
+
+            for (let el of meta_without_tinyMCE) {
+                const id = el.id.substring(5, 6);
+
+                document.querySelector(`#rsed_${id}`).addEventListener('keyup', () => {
+
+                    const meta_element = document.querySelector(`#rsed_${id}`);
+                    const html = meta_element.innerHTML;
+                    const [metaKey, postID] = getMetaData(meta_element);
+
+                    delay(() => {
+                        autoSave_meta(html, metaKey, postID);
+                    }, 500);
+
+                });
+            }
+
+            
+
+        }, 1500);  // end setTimeout
+
+    }
+
+}); // JQuery ready
+
+
+
+function getMetaData(meta_element) {
+    const endMetaString = meta_element.classList[1].indexOf('_unique123_');
+    const metaKey = meta_element.classList[1].substring(5, endMetaString);
+    const postID = meta_element.classList[1].substring(endMetaString + 11);
+    return [metaKey, postID];
+}
+
+
+// autoSave functions for saving to backend
+function autoSave_mainText(html) {
+
+    classes = document.getElementById('mainDiv').classList.value;
+
+    const start_ID = classes.indexOf('rsed_post_');
+    const id = classes.substring(start_ID + 10, start_ID + 11);
+
+    const url = window.location.origin + ajaxurl;
+    const data = {
+        html,
+        action: 'autoSave_mainText',
+        post_ID: id
+    };
+
+    jQuery.post(
+        url,
+        data,
+        (res) => {
+            console.log('succesfully saved post');
+        });
+}
+
+
+function autoSave_meta(html, meta_key, meta_postID) {
+
+    const url = window.location.origin + ajaxurl;
+    const data = {
+        html,
+        action: 'autoSave_meta',
+        post_ID: meta_postID,
+        meta_key,
+    };
+
+    jQuery.post(
+        url,
+        data,
+        (res) => {
+            console.log('succesfully saved meta');
+        });
+
+}
 
 
 

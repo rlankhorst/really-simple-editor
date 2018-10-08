@@ -1,12 +1,12 @@
 .rsed_content:hover{
-    outline: 2px dashed rgb(77, 77, 77);
-    outline-offset: 5px;
+    outline: 1px dashed rgba(77, 77, 77, 0.43);
+    outline-offset: 1px;
     cursor: pointer;
 }
 
 .rsed_selected {
-    outline: 2px dashed rgb(77, 77, 77);
-    outline-offset: 5px;
+    outline: 1px dashed rgba(77, 77, 77, 0.43);
+    outline-offset: 1px;
     cursor: text !important; 
 }
 
@@ -58,7 +58,7 @@
 }
 
 .rsed_meta_canUpdate:hover {
-    outline: 2px dashed rgb(77, 77, 77);
-    outline-offset: 3px;
+    outline: 1px dashed rgba(77, 77, 77, 0.43);
+    outline-offset: 1px;
     cursor: pointer;
 }
