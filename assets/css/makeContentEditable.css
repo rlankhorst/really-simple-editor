@@ -4,6 +4,14 @@
     cursor: pointer;
 }
 
+.rsed_content {
+    padding: 0 4px;
+}
+
+.rsed_meta_canUpdate {
+    padding: 0 4px;
+}
+
 .rsed_selected {
     outline: 1px dashed rgba(77, 77, 77, 0.43);
     outline-offset: 1px;
@@ -38,7 +46,7 @@
 
 .rsed_icons_container{
     position: relative; 
-    bottom: 47px;
+    bottom: 42px;
     height: 0px;
     display: none;
 }
@@ -46,6 +54,8 @@
 .rsed_editor:hover{
     color: rgb(0, 79, 0);
 }
+
+
 
 .rsed_danger:hover {
     color: rgb(171, 0, 0);
@@ -61,4 +71,28 @@
     outline: 1px dashed rgba(77, 77, 77, 0.43);
     outline-offset: 1px;
     cursor: pointer;
+}
+
+.rsed_hide{
+    display: none;
+}
+
+
+.rsed_safeText{
+    position: absolute;
+    top: 2px;
+    right: 184px;
+    font-size: 10px;
+    height: 31px;
+    width: 57px;
+    text-align: center;
+    background-color: rgba(239, 239, 239, 0.7);
+    display: inline-block;
+    line-height: 31px;
+    border-radius: 10px;
+    border: 1px solid #e4e4e4;
+}
+
+.rsed_noTinyMCE_text{
+    right: 197px;
 }

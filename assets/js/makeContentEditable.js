@@ -83,6 +83,7 @@ function addEditIcons(selector, identifier, noTinyMCE) {
         <div onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
         <div class="rsed_editButtons rsed_danger">${closeSVG}</div>
     </div>
+    <span class="rsed_hide rsed_noTinyMCE_text" id="rsed_safeText_${identifier}">Saving...</span>
 </div>
 `
         );
@@ -95,6 +96,7 @@ function addEditIcons(selector, identifier, noTinyMCE) {
         <div onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
         <div class="rsed_editButtons rsed_danger">${closeSVG}</div>
     </div>
+    <span class="rsed_hide" id="rsed_safeText_${identifier}">Saving...</span>
 </div>
 `
         );
@@ -259,11 +261,19 @@ function revertText() {
     if (focus === 'main') {
         document.querySelector('.rsed_content').innerHTML = backupHTML['main'];
         document.querySelector('#editor_ifr').contentDocument.body.innerHTML = backupHTML['main'];
+        document.querySelector('.wp-editor-area#editor').value = backupHTML['main'];
+        autoSave_mainText(backupHTML['main']);
     } else {
         const id = focus.substring(5);
         document.querySelector(`#rsed_${id}`).innerHTML = backupHTML[`rsed_${id}`];
         if (document.querySelector(`#editor_${id}_ifr`)) {
             document.querySelector(`#editor_${id}_ifr`).contentDocument.body.innerHTML = backupHTML[`rsed_${id}`];
+            document.querySelector(`.wp-editor-area#editor_${id}`).value = backupHTML[`rsed_${id}`];
+            // perform a click to trigger a save event
+            document.querySelector(`#qt_editor_${id}_toolbar`).click();
+        } else {
+            // perform a keydown event to trigger save event
+            document.querySelector(`#rsed_${id}`).dispatchEvent(new Event('keyup'));
         }
     }
 
@@ -281,11 +291,19 @@ const delay = (() => {
 
 
 
-// Has the following funtionality
+// Following block:
 // 1) synchronizes the tinymce and the normal editing
 // 2) does the Ajax call to the backend to autoSave the data
 
 jQuery(document).ready(() => {
+
+    // programmatically set the tinyMCE view to visual.
+    setTimeout(() => {
+        for (let btn of document.querySelectorAll('.switch-tmce')) {
+            btn.click();
+        }
+    }, 500);
+
 
     if (document.querySelector('.rsed_editable')) {
 
@@ -293,35 +311,66 @@ jQuery(document).ready(() => {
         // get a referenceError for trying to access non existing DOM elements
         setTimeout(() => {
 
-            // main text 2 way data binding/auto saving:
+            ///////////// main text 2 way data binding/auto saving: /////////////
             let iFrame = document.querySelector('#editor_ifr').contentDocument.body;
             iFrame.innerHTML = document.querySelector('.rsed_content').innerHTML;
 
+            // visual editor
             iFrame.addEventListener('keyup', () => {
-                const html = iFrame.innerHTML
+                const html = iFrame.innerHTML;
+
                 document.querySelector('.rsed_content').innerHTML = html;
                 delay(() => {
                     autoSave_mainText(html);
                 }, 500);
             });
 
+            // text editor
             document.querySelector('#editor').addEventListener('keyup', () => {
                 const html = document.querySelector('#editor').value;
-                document.querySelector('.rsed_content').innerHTML = html;
+
+                document.querySelector('.rsed_content').innerHTML = `<p>${html}</p>`;
                 delay(() => {
                     autoSave_mainText(html);
                 }, 500);
             });
 
+            // no TinyMCE editor
             document.querySelector('.rsed_content').addEventListener('keyup', () => {
                 const html = document.querySelector('.rsed_content').innerHTML;
+
                 iFrame.innerHTML = html;
+                document.querySelector('#editor').value = html;
                 delay(() => {
                     autoSave_mainText(html);
                 }, 500);
             });
 
-            // other meta tags with tinyMCE 2 way data binding/autosaving:
+            // TinyMCE button events main text
+            document.querySelector('#wp-editor-wrap').addEventListener('click', (event) => {
+                // visual editor
+                if (event.target.closest('.mce-container-body.mce-flow-layout')) {
+                    const html = iFrame.innerHTML;
+
+                    document.querySelector('.rsed_content').innerHTML = html;
+                    delay(() => {
+                        autoSave_mainText(html);
+                    }, 500);
+                }
+
+                // text editor
+                if (event.target.closest('#qt_editor_toolbar')) {
+                    const html = document.querySelector('#editor').value;
+
+                    document.querySelector('.rsed_content').innerHTML = `<p>${html}</p>`;
+                    delay(() => {
+                        autoSave_mainText(html);
+                    }, 500);
+                }
+
+            });
+
+            ///////////// other meta tags with tinyMCE 2 way data binding/autosaving: /////////////////
             const elements = document.querySelectorAll('.rsed_hasTinyMCE');
             const ID_List_with_tinyMCE = []; // list of id's of meta fields with tinyMCE editors 
 
@@ -336,30 +385,63 @@ jQuery(document).ready(() => {
 
                 const [metaKey, postID] = getMetaData(meta_element);
 
+                // visual editor
                 iFrame.addEventListener('keyup', () => {
                     const html = iFrame.innerHTML;
+
                     document.querySelector(`#rsed_${id}`).innerHTML = html;
                     delay(() => {
-                        autoSave_meta(html, metaKey, postID);
+                        autoSave_meta(html, metaKey, postID, id);
                     }, 500);
                 });
 
+                // text editor
                 document.querySelector(`#editor_${id}`).addEventListener('keyup', () => {
                     const html = document.querySelector(`#editor_${id}`).value;
-                    document.querySelector(`#rsed_${id}`).innerHTML = html;
+                    document.querySelector(`#rsed_${id}`).innerHTML = `<p>${html}</p>`;
                     delay(() => {
-                        autoSave_mainText(html);
+                        autoSave_meta(html, metaKey, postID, id);
                     }, 500);
                 });
 
+                // no TinyMCE editor
                 document.querySelector(`#rsed_${id}`).addEventListener('keyup', () => {
                     const html = document.querySelector(`#rsed_${id}`).innerHTML;
+
+                    document.querySelector(`#editor_${id}`).value = html;
                     iFrame.innerHTML = html;
                     delay(() => {
-                        autoSave_meta(html, metaKey, postID);
+                        autoSave_meta(html, metaKey, postID, id);
                     }, 500);
                 });
-            }
+
+
+                // TinyMCE button events main text
+                document.querySelector(`#wp-editor_${id}-wrap`).addEventListener('click', (event) => {
+
+                    // visual editor
+                    if (event.target.closest('.mce-container-body.mce-flow-layout')) {
+                        const html = iFrame.innerHTML;
+
+                        document.querySelector(`#rsed_${id}`).innerHTML = html;
+                        delay(() => {
+                            autoSave_meta(html, metaKey, postID, id);
+                        }, 500);
+                    }
+
+                    // text editor
+                    if (event.target.closest(`#qt_editor_${id}_toolbar`)) {
+                        const html = document.querySelector(`#editor_${id}`).value;
+
+                        document.querySelector(`#rsed_${id}`).innerHTML = `<p>${html}</p>`;
+                        delay(() => {
+                            autoSave_meta(html, metaKey, postID, id);
+                        }, 500);
+                    }
+
+                });
+
+            } 
 
             // meta tags without tinyMCE autosaving
             const meta_without_tinyMCE = []; // DOM meta wrapping div elements without tinyMCE
@@ -385,13 +467,13 @@ jQuery(document).ready(() => {
                     const [metaKey, postID] = getMetaData(meta_element);
 
                     delay(() => {
-                        autoSave_meta(html, metaKey, postID);
+                        autoSave_meta(html, metaKey, postID, id);
                     }, 500);
 
                 });
             }
 
-            
+
 
         }, 1500);  // end setTimeout
 
@@ -408,9 +490,11 @@ function getMetaData(meta_element) {
     return [metaKey, postID];
 }
 
-
+//////////////////////////////////////////////////////////
 // autoSave functions for saving to backend
 function autoSave_mainText(html) {
+
+    // console.log(html);
 
     classes = document.getElementById('mainDiv').classList.value;
 
@@ -424,16 +508,22 @@ function autoSave_mainText(html) {
         post_ID: id
     };
 
+    const safeTextBox = document.getElementById('rsed_safeText_main');
+
+    safeTextBox.innerText = 'Saving...';
+    safeTextBox.classList.add('rsed_safeText');
+
     jQuery.post(
         url,
         data,
         (res) => {
+            safeTextBox.innerText = 'Saved';
             console.log('succesfully saved post');
         });
 }
 
 
-function autoSave_meta(html, meta_key, meta_postID) {
+function autoSave_meta(html, meta_key, meta_postID, id) {
 
     const url = window.location.origin + ajaxurl;
     const data = {
@@ -443,10 +533,16 @@ function autoSave_meta(html, meta_key, meta_postID) {
         meta_key,
     };
 
+    const safeTextBox = document.getElementById(`rsed_safeText_${id}`);
+
+    safeTextBox.innerText = 'Saving...';
+    safeTextBox.classList.add('rsed_safeText');
+
     jQuery.post(
         url,
         data,
         (res) => {
+            safeTextBox.innerText = 'Saved';
             console.log('succesfully saved meta');
         });
 
@@ -456,3 +552,5 @@ function autoSave_meta(html, meta_key, meta_postID) {
 
 
 
+
+// https://wordpress.org/plugins/advanced-custom-fields/
