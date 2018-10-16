@@ -10,7 +10,9 @@ let editButtons = {};        // object with as properties all the wrapper div DO
 let focus;                   // string, values: main, meta_x
 let backupHTML = {};         // The original HTML of all fields before editing, first element is the main text, remainder are the meta elements
 let normalEditor = true;     // if true wysiwyg is shown else the tinyMCE editor
-const saveTime = 1000;       // time in Ms when the changes are saved after the user is done typing
+const saveTime = 500;       // time in Ms when the changes are saved after the user is done typing
+let url;
+jQuery(document).ready(() => { url = window.location.origin + ajaxurl});
 
 jQuery(document).ready(() => {
 
@@ -145,6 +147,11 @@ function closeEditMode(event) {
         return;
     }
 
+    // for not closing when in media library
+    if (event.target.closest('.media-modal.wp-core-ui')) {
+        return;
+    }
+
     if (event.target.closest('.wp-editor-wrap')) {
         return;
     }
@@ -170,6 +177,7 @@ function closeEditMode(event) {
     selectNormalEditor();
 
 }
+
 
 // When closing or toggling between editable sections 
 // the TinyMCE needs to be closed and the normal should be selected
@@ -294,7 +302,6 @@ const delay = (() => {
 // Following block:
 // 1) synchronizes the tinymce and the normal editing
 // 2) does the Ajax call to the backend to autoSave the data
-
 jQuery(document).ready(() => {
 
     // programmatically set the tinyMCE view to visual.
@@ -322,7 +329,7 @@ jQuery(document).ready(() => {
                 document.querySelector('.rsed_content').innerHTML = html;
                 delay(() => {
                     autoSave_mainText(html);
-                }, 500);
+                }, saveTime);
             });
 
             // text editor
@@ -332,7 +339,7 @@ jQuery(document).ready(() => {
                 document.querySelector('.rsed_content').innerHTML = `<p>${html}</p>`;
                 delay(() => {
                     autoSave_mainText(html);
-                }, 500);
+                }, saveTime);
             });
 
             // no TinyMCE editor
@@ -343,7 +350,7 @@ jQuery(document).ready(() => {
                 document.querySelector('#editor').value = html;
                 delay(() => {
                     autoSave_mainText(html);
-                }, 500);
+                }, saveTime);
             });
 
             // TinyMCE button events main text
@@ -355,7 +362,7 @@ jQuery(document).ready(() => {
                     document.querySelector('.rsed_content').innerHTML = html;
                     delay(() => {
                         autoSave_mainText(html);
-                    }, 500);
+                    }, saveTime);
                 }
 
                 // text editor
@@ -365,7 +372,7 @@ jQuery(document).ready(() => {
                     document.querySelector('.rsed_content').innerHTML = `<p>${html}</p>`;
                     delay(() => {
                         autoSave_mainText(html);
-                    }, 500);
+                    }, saveTime);
                 }
 
             });
@@ -392,7 +399,7 @@ jQuery(document).ready(() => {
                     document.querySelector(`#rsed_${id}`).innerHTML = html;
                     delay(() => {
                         autoSave_meta(html, metaKey, postID, id);
-                    }, 500);
+                    }, saveTime);
                 });
 
                 // text editor
@@ -401,7 +408,7 @@ jQuery(document).ready(() => {
                     document.querySelector(`#rsed_${id}`).innerHTML = `<p>${html}</p>`;
                     delay(() => {
                         autoSave_meta(html, metaKey, postID, id);
-                    }, 500);
+                    }, saveTime);
                 });
 
                 // no TinyMCE editor
@@ -412,7 +419,7 @@ jQuery(document).ready(() => {
                     iFrame.innerHTML = html;
                     delay(() => {
                         autoSave_meta(html, metaKey, postID, id);
-                    }, 500);
+                    }, saveTime);
                 });
 
 
@@ -426,7 +433,7 @@ jQuery(document).ready(() => {
                         document.querySelector(`#rsed_${id}`).innerHTML = html;
                         delay(() => {
                             autoSave_meta(html, metaKey, postID, id);
-                        }, 500);
+                        }, saveTime);
                     }
 
                     // text editor
@@ -436,7 +443,7 @@ jQuery(document).ready(() => {
                         document.querySelector(`#rsed_${id}`).innerHTML = `<p>${html}</p>`;
                         delay(() => {
                             autoSave_meta(html, metaKey, postID, id);
-                        }, 500);
+                        }, saveTime);
                     }
 
                 });
@@ -468,7 +475,7 @@ jQuery(document).ready(() => {
 
                     delay(() => {
                         autoSave_meta(html, metaKey, postID, id);
-                    }, 500);
+                    }, saveTime);
 
                 });
             }
@@ -500,8 +507,6 @@ function autoSave_mainText(html) {
 
     const start_ID = classes.indexOf('rsed_post_');
     const id = classes.substring(start_ID + 10, start_ID + 11);
-
-    const url = window.location.origin + ajaxurl;
     const data = {
         html,
         action: 'autoSave_mainText',
@@ -525,7 +530,6 @@ function autoSave_mainText(html) {
 
 function autoSave_meta(html, meta_key, meta_postID, id) {
 
-    const url = window.location.origin + ajaxurl;
     const data = {
         html,
         action: 'autoSave_meta',
@@ -546,11 +550,102 @@ function autoSave_meta(html, meta_key, meta_postID, id) {
             console.log('succesfully saved meta');
         });
 
+}//////////////////////////
+
+
+
+
+// when clicking on Add media on TinyMCE editor we want trigger a 
+// save when the user adds an img tag via the add media modal
+setTimeout(() => { // setTimout > waiting for tinyMCE to load
+
+    document.querySelector('#insert-media-button.insert-media.add_media').addEventListener('click', () => {
+        setTimeout(() => { // setTimout for waiting for modal to load
+            document.querySelector('.media-button.media-button-insert').addEventListener('click', () => { // when modal is opened we need to attach listerner to save button
+
+                setTimeout(() => { // setTimeout for waiting for the img tag to be inserted by other tinyMCE events
+
+                    let iFrame = document.querySelector('#editor_ifr').contentDocument.body;
+                    const html = iFrame.innerHTML;
+    
+                    document.querySelector('.rsed_content').innerHTML = html;
+    
+                    autoSave_mainText(html);
+
+                } ,500);
+
+            });
+        }, 500);
+
+    });
+    
+}, 1000);
+
+
+
+
+//// safe when a user sets the thumbnail image:
+jQuery(document).ready(() => {
+
+    const thumbNail = document.querySelector('#set-post-thumbnail')
+    
+    if (thumbNail) {
+    
+        thumbNail.addEventListener('click', () => {
+
+            setTimeout(() => {  // needed for waiting for the modal to render
+
+                let selectedEl = document.querySelector('.attachment.selected');
+                let thumbNail_ID;
+
+                if (selectedEl) {
+                    thumbNail_ID = selectedEl.dataset.id;
+                }
+
+                document.querySelector('.media-modal-content').addEventListener('click', (event) => {
+
+                    if (event.target.closest('.media-button-select.media-button')) {
+                        return;
+                    }
+
+                    selectedEl = document.querySelector('.attachment.selected');
+
+                    if (selectedEl) {
+                        thumbNail_ID = selectedEl.dataset.id;
+                    }
+
+                });
+
+                document.querySelector('.media-button.media-button-select').addEventListener('click', () => {
+                    save_thumnail(thumbNail_ID);
+                });
+            } ,500);
+        })
+    }
+
+});
+
+
+function save_thumnail(thumbNail_ID) {
+
+    const index = document.querySelector('#mainDiv').classList.value.indexOf('rsed_post_');
+    const id = document.querySelector('#mainDiv').classList.value.substring(index + 10, index + 11);
+
+    const data = {
+        action: 'rsed_safe_thumbnail',
+        post_ID: id,
+        thumbNail_ID
+    };
+
+    jQuery.post(
+        url,
+        data,
+        (res) => {
+            console.log('succesfully saved thumbnail');
+        });
 }
 
 
 
-
-
-
 // https://wordpress.org/plugins/advanced-custom-fields/
+// https://codepen.io/munjewar/pen/GYoWMB?page=1&

@@ -35,7 +35,7 @@
     width: 110px;
     margin: 0 auto;
     background-color:rgba(239, 239, 239, 0.7);
-    border-radius: 10px;
+    border-radius: 6px;
     padding-top: 2px;
     border: 1px solid #e4e4e4;
 }
@@ -62,7 +62,6 @@
 }
 
 
-
 .rsed_normalEditor{
     display: none;
 }
@@ -80,17 +79,18 @@
 
 .rsed_safeText{
     position: absolute;
-    top: 2px;
+    top: 0px;
     right: 184px;
     font-size: 10px;
-    height: 31px;
+    height: 35px;
     width: 57px;
     text-align: center;
-    background-color: rgba(239, 239, 239, 0.7);
+    background-color: rgb(212, 255, 212);
     display: inline-block;
-    line-height: 31px;
-    border-radius: 10px;
-    border: 1px solid #e4e4e4;
+    line-height: 35px;
+    border-radius: 6px;
+    border: 1px solid #b5e0c3;
+    color: #035403;
 }
 
 .rsed_noTinyMCE_text{
