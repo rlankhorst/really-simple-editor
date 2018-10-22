@@ -7,7 +7,6 @@ class rsed_alterContent
 
     public function __construct()
     {
-
         add_filter('the_content', array($this, 'addToContent'));
         add_filter('get_post_metadata', array($this, 'addToMeta'), 100, 4);
         add_action('wp_enqueue_scripts', array($this, 'enqueue'));
@@ -25,8 +24,9 @@ class rsed_alterContent
 
         $settings = array(
             "tinymce" => array(
-                "selector" => '#editor',
                 "inline" => false,
+                'autoresize_min_height' => 100,
+                'wp_autoresize_on' => true,
             ),
         );
 
@@ -75,6 +75,14 @@ class rsed_alterContent
         global $post;
         $post_id = get_the_ID();
 
+        $settings = array(
+            "tinymce" => array(
+                "inline" => false,
+                'autoresize_min_height' => 100,
+                'wp_autoresize_on' => true,
+            ),
+        );
+
         $this->metaID += 1;
 
         if ($isFieldEditable === 'wysiwyg') {
@@ -85,13 +93,31 @@ class rsed_alterContent
 
     }
 
+    // adding a tinymce autoresize plugin
+    public function add_tinymce_plugin($plugins_array)
+    {
+        $pluginPath = ABSPATH . 'wp-includes/js/tinymce/plugins/wpautoresize/plugin.min.js';
+
+        $plugins_array['wpautoresize'] = $pluginPath;
+
+        return $plugins_array;
+    }
+
+    public function mytheme_tinymce_settings($arr) {
+        _log(211);
+        _log($arr);
+
+        return $arr;
+    }
+
+
     public function make_post_thumbnail_editable($html, $post_id, $post_thumbnail_id, $size, $attr)
     {
         $post_id = $this->edited_post_id;
 
         $img_html = $html;
 
-        $html = 
+        $html =
         '<div class="gpp-image-container">' .
         '<div class="gpp-cover-overlay"  >' .
         '<i class="icon-picture"></i><br>' .
@@ -99,8 +125,8 @@ class rsed_alterContent
         '<div id="postimagediv" class="postbox">' .
         '<div class="inside">' .
         '<a href="' . home_url() . '/wp-admin/media-upload.php?post_id=' . $post_id . '&type=image" id="set-post-thumbnail" class="thickbox">' .
-        '<div class="edit-image">' .
-        '</div>';
+            '<div class="edit-image">' .
+            '</div>';
 
         if (has_post_thumbnail($post_id)) {
             $img_src_pattern = '/(?<=src=\")(.*?)(?=\")/';
@@ -114,13 +140,11 @@ class rsed_alterContent
         }
         $html .= '</a>' .
             '</div>' .
-            '</div>' . 
+            '</div>' .
             '</div>';
 
         return $html;
     }
-    
-
 
 }
 
@@ -129,12 +153,8 @@ add_action('wp_ajax_autoSave_mainText', 'rsed_update_post_mainText');
 add_action('wp_ajax_autoSave_meta', 'rsed_update_post_meta');
 add_action('wp_ajax_rsed_safe_thumbnail', 'rsed_safe_thumbnail');
 
-
-
-
 function rsed_update_post_mainText()
 {
-
     $html = wp_kses_post($_POST['html']);
     $post_ID = intval($_POST['post_ID']);
 
@@ -149,7 +169,6 @@ function rsed_update_post_mainText()
 
 function rsed_update_post_meta()
 {
-
     $html = wp_kses_post($_POST['html']);
     $post_ID = intval($_POST['post_ID']);
     $meta_key = strval($_POST['meta_key']);
@@ -158,12 +177,10 @@ function rsed_update_post_meta()
     exit;
 }
 
-function rsed_safe_thumbnail() 
+function rsed_safe_thumbnail()
 {
     $post_ID = intval($_POST['post_ID']);
     $thumbNail_ID = intval($_POST['thumbNail_ID']);
 
     set_post_thumbnail($post_ID, $thumbNail_ID);
 }
-
-

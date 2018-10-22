@@ -82,8 +82,8 @@ function addEditIcons(selector, identifier, noTinyMCE) {
             `
 <div class="rsed_icons_container rsed_editButtons_${identifier}">
     <div class="rsed_icons rsed_icons_noTinyMCE">
-        <div onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
-        <div class="rsed_editButtons rsed_danger">${closeSVG}</div>
+        <div data-balloon="Undo changes" data-balloon-pos="up" onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
+        <div data-balloon="Close editor" data-balloon-pos="up" class="rsed_editButtons rsed_danger">${closeSVG}</div>
     </div>
     <span class="rsed_hide rsed_noTinyMCE_text" id="rsed_safeText_${identifier}">Saving...</span>
 </div>
@@ -94,9 +94,9 @@ function addEditIcons(selector, identifier, noTinyMCE) {
             `
 <div class="rsed_icons_container rsed_editButtons_${identifier}">
     <div class="rsed_icons">
-        <div onclick="ToggleEditor()" class="rsed_editButtons rsed_editor rsed_dontClose">${editSVG}</div>
-        <div onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
-        <div class="rsed_editButtons rsed_danger">${closeSVG}</div>
+        <div data-balloon="Switch editor mode" data-balloon-pos="up" onclick="ToggleEditor()" class="rsed_editButtons rsed_editor rsed_dontClose">${editSVG}</div>
+        <div data-balloon="Undo changes" data-balloon-pos="up" onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
+        <div data-balloon="Close editor" data-balloon-pos="up" class="rsed_editButtons rsed_danger">${closeSVG}</div>
     </div>
     <span class="rsed_hide" id="rsed_safeText_${identifier}">Saving...</span>
 </div>
@@ -298,7 +298,6 @@ const delay = (() => {
 })();
 
 
-
 // Following block:
 // 1) synchronizes the tinymce and the normal editing
 // 2) does the Ajax call to the backend to autoSave the data
@@ -484,7 +483,7 @@ jQuery(document).ready(() => {
 
         }, 1500);  // end setTimeout
 
-    }
+    }  // end if document.querySelector('.rsed_editable')
 
 }); // JQuery ready
 
@@ -496,6 +495,8 @@ function getMetaData(meta_element) {
     const postID = meta_element.classList[1].substring(endMetaString + 11);
     return [metaKey, postID];
 }
+
+
 
 //////////////////////////////////////////////////////////
 // autoSave functions for saving to backend
@@ -551,8 +552,6 @@ function autoSave_meta(html, meta_key, meta_postID, id) {
         });
 
 }//////////////////////////
-
-
 
 
 // when clicking on Add media on TinyMCE editor we want trigger a 
@@ -618,6 +617,13 @@ jQuery(document).ready(() => {
 
                 document.querySelector('.media-button.media-button-select').addEventListener('click', () => {
                     save_thumnail(thumbNail_ID);
+
+                    // after using media library wordpress insert some image subscripts which not desirable because change of layout
+                    setTimeout(() => {  // waiting for the image subscripts to be rendered before we can remove them
+                        $('#remove-post-thumbnail').remove();
+                        $('#set-post-thumbnail-desc').remove();
+                    }, 500);
+
                 });
             } ,500);
         })
@@ -647,5 +653,5 @@ function save_thumnail(thumbNail_ID) {
 
 
 
+
 // https://wordpress.org/plugins/advanced-custom-fields/
-// https://codepen.io/munjewar/pen/GYoWMB?page=1&
