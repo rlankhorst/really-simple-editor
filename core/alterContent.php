@@ -11,6 +11,7 @@ class rsed_alterContent
         add_filter('get_post_metadata', array($this, 'addToMeta'), 100, 4);
         add_action('wp_enqueue_scripts', array($this, 'enqueue'));
         add_filter('post_thumbnail_html', array($this, 'make_post_thumbnail_editable'), 99, 5);
+        add_filter('the_editor_content', array($this, 'add_editor_stylesheet'));
     }
 
     // adding a div to main content so we can manipulate it via javascript
@@ -56,9 +57,12 @@ class rsed_alterContent
 
         $result = $wpdb->get_results($wpdb->prepare("
         SELECT * FROM $table
-        WHERE meta_key = %s ",
-            $meta_key
+        WHERE meta_key = %s 
+        AND post_id = %d",
+            $meta_key, $object_id
         ));
+
+        _log($result);
 
         $optionFieldName = 'rsed_' . $meta_key;
 
@@ -93,26 +97,14 @@ class rsed_alterContent
 
     }
 
-    // adding a tinymce autoresize plugin
-    public function add_tinymce_plugin($plugins_array)
-    {
-        $pluginPath = ABSPATH . 'wp-includes/js/tinymce/plugins/wpautoresize/plugin.min.js';
-
-        $plugins_array['wpautoresize'] = $pluginPath;
-
-        return $plugins_array;
-    }
-
-    public function mytheme_tinymce_settings($arr) {
-        _log(211);
-        _log($arr);
-
-        return $arr;
-    }
-
-
     public function make_post_thumbnail_editable($html, $post_id, $post_thumbnail_id, $size, $attr)
     {
+        global $post;
+
+        if (is_archive()) {
+            return $html;
+        }
+
         $post_id = $this->edited_post_id;
 
         $img_html = $html;
@@ -123,7 +115,7 @@ class rsed_alterContent
         '<i class="icon-picture"></i><br>' .
         '</div>' .
         '<div id="postimagediv" class="postbox">' .
-        '<div class="inside">' .
+        '<div class="inside rsed_changecolor">' .
         '<a href="' . home_url() . '/wp-admin/media-upload.php?post_id=' . $post_id . '&type=image" id="set-post-thumbnail" class="thickbox">' .
             '<div class="edit-image">' .
             '</div>';
@@ -145,6 +137,25 @@ class rsed_alterContent
 
         return $html;
     }
+
+
+    public function add_editor_stylesheet ()
+    {
+        global $editor_styles;
+
+        if (!isset($editor_styles)) {
+            $editor_styles = array();
+        }
+
+        $stylesheets = array(
+            'assets/css/editor-style.css',
+            'css/editor-style.css',
+            'editor-style.css',
+        );
+
+        $editor_styles = array_merge( $editor_styles, $stylesheets );
+    }
+
 
 }
 

@@ -2,6 +2,7 @@ const editSVG = `<svg  class="rsed_normalEditor" aria-hidden="true" data-prefix=
     <svg  class="rsed_richEditor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas" data-icon="edit" class="svg-inline--fa fa-edit fa-w-18" role="img" viewBox="0 0 576 512"><path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"/></svg>`;
 const backArrowSVG = '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas" data-icon="undo-alt" class="svg-inline--fa fa-undo-alt fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M255.545 8c-66.269.119-126.438 26.233-170.86 68.685L48.971 40.971C33.851 25.851 8 36.559 8 57.941V192c0 13.255 10.745 24 24 24h134.059c21.382 0 32.09-25.851 16.971-40.971l-41.75-41.75c30.864-28.899 70.801-44.907 113.23-45.273 92.398-.798 170.283 73.977 169.484 169.442C423.236 348.009 349.816 424 256 424c-41.127 0-79.997-14.678-110.63-41.556-4.743-4.161-11.906-3.908-16.368.553L89.34 422.659c-4.872 4.872-4.631 12.815.482 17.433C133.798 479.813 192.074 504 256 504c136.966 0 247.999-111.033 248-247.998C504.001 119.193 392.354 7.755 255.545 8z"/></svg>'
 const closeSVG = '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="far" data-icon="times-circle" class="svg-inline--fa fa-times-circle fa-w-16" role="img" viewBox="0 0 512 512" ><path   fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm101.8-262.2L295.6 256l62.2 62.2c4.7 4.7 4.7 12.3 0 17l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L256 295.6l-62.2 62.2c-4.7 4.7-12.3 4.7-17 0l-22.6-22.6c-4.7-4.7-4.7-12.3 0-17l62.2-62.2-62.2-62.2c-4.7-4.7-4.7-12.3 0-17l22.6-22.6c4.7-4.7 12.3-4.7 17 0l62.2 62.2 62.2-62.2c4.7-4.7 12.3-4.7 17 0l22.6 22.6c4.7 4.7 4.7 12.3 0 17z"/></svg>';
+const checkSVG = `<svg class="rsed_checkSVG" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas" data-icon="check" class="svg-inline--fa fa-check fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/><path xmlns="http://www.w3.org/2000/svg" fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>`
 // Icons from: https://fontawesome.com  
 // Licence:  https://fontawesome.com/license
 
@@ -12,7 +13,7 @@ let backupHTML = {};         // The original HTML of all fields before editing, 
 let normalEditor = true;     // if true wysiwyg is shown else the tinyMCE editor
 const saveTime = 500;       // time in Ms when the changes are saved after the user is done typing
 let url;
-jQuery(document).ready(() => { url = window.location.origin + ajaxurl});
+jQuery(document).ready(() => { url = window.location.origin + ajaxurl });
 
 jQuery(document).ready(() => {
 
@@ -152,6 +153,10 @@ function closeEditMode(event) {
         return;
     }
 
+    if (event.target.closest('.mce-btn')) {
+        return;
+    }
+
     if (event.target.closest('.wp-editor-wrap')) {
         return;
     }
@@ -174,6 +179,7 @@ function closeEditMode(event) {
     }
 
     closeStyles(focus);
+    checkIfPlaceholdersNeeded();
     selectNormalEditor();
 
 }
@@ -232,12 +238,17 @@ function ToggleEditor() {
         if (focus === 'main') {
             jQuery('.rsed_editable').css('display', 'none');
             jQuery("#wp-editor-wrap").css('display', 'block');
+            setTimeout(() => {
+                document.querySelector('#editor_ifr').contentDocument.body.dispatchEvent(new Event('keyup')); // click to resize tinyMCE
+            }, 50);
         } else {
             const id = focus.substring(5);
             jQuery(`#wp-editor_${id}-wrap`).css('display', 'block');
             jQuery(`#rsed_${id}`).css('display', 'none');
+            setTimeout(() => {
+                document.querySelector(`#editor_${id}_ifr`).contentDocument.body.dispatchEvent(new Event('keyup')); // click to resize tinyMCE
+            }, 50);
         }
-
         // toggling to normal editor
     } else {
 
@@ -280,7 +291,7 @@ function revertText() {
             // perform a click to trigger a save event
             document.querySelector(`#qt_editor_${id}_toolbar`).click();
         } else {
-            // perform a keydown event to trigger save event
+            // perform a keyup event to trigger save event
             document.querySelector(`#rsed_${id}`).dispatchEvent(new Event('keyup'));
         }
     }
@@ -322,8 +333,13 @@ jQuery(document).ready(() => {
             iFrame.innerHTML = document.querySelector('.rsed_content').innerHTML;
 
             // visual editor
-            iFrame.addEventListener('keyup', () => {
+            iFrame.addEventListener('keyup', (event) => {
                 const html = iFrame.innerHTML;
+
+                // if event is programmatically induced we don't want to save
+                if (event instanceof Event) {
+                    return;
+                }
 
                 document.querySelector('.rsed_content').innerHTML = html;
                 delay(() => {
@@ -352,7 +368,7 @@ jQuery(document).ready(() => {
                 }, saveTime);
             });
 
-            // TinyMCE button events main text
+            // TinyMCE button events (e.g. make text bold) main text
             document.querySelector('#wp-editor-wrap').addEventListener('click', (event) => {
                 // visual editor
                 if (event.target.closest('.mce-container-body.mce-flow-layout')) {
@@ -392,8 +408,13 @@ jQuery(document).ready(() => {
                 const [metaKey, postID] = getMetaData(meta_element);
 
                 // visual editor
-                iFrame.addEventListener('keyup', () => {
+                iFrame.addEventListener('keyup', (event) => {
                     const html = iFrame.innerHTML;
+
+                    // if event is programmatically induced we don't want to save
+                    if (event instanceof Event) {
+                        return;
+                    }
 
                     document.querySelector(`#rsed_${id}`).innerHTML = html;
                     delay(() => {
@@ -447,7 +468,7 @@ jQuery(document).ready(() => {
 
                 });
 
-            } 
+            }
 
             // meta tags without tinyMCE autosaving
             const meta_without_tinyMCE = []; // DOM meta wrapping div elements without tinyMCE
@@ -488,7 +509,6 @@ jQuery(document).ready(() => {
 }); // JQuery ready
 
 
-
 function getMetaData(meta_element) {
     const endMetaString = meta_element.classList[1].indexOf('_unique123_');
     const metaKey = meta_element.classList[1].substring(5, endMetaString);
@@ -501,8 +521,6 @@ function getMetaData(meta_element) {
 //////////////////////////////////////////////////////////
 // autoSave functions for saving to backend
 function autoSave_mainText(html) {
-
-    // console.log(html);
 
     classes = document.getElementById('mainDiv').classList.value;
 
@@ -523,7 +541,7 @@ function autoSave_mainText(html) {
         url,
         data,
         (res) => {
-            safeTextBox.innerText = 'Saved';
+            safeTextBox.innerHTML = `${checkSVG} Saved`;
             console.log('succesfully saved post');
         });
 }
@@ -547,7 +565,7 @@ function autoSave_meta(html, meta_key, meta_postID, id) {
         url,
         data,
         (res) => {
-            safeTextBox.innerText = 'Saved';
+            safeTextBox.innerHTML = `${checkSVG} Saved`;
             console.log('succesfully saved meta');
         });
 
@@ -558,28 +576,51 @@ function autoSave_meta(html, meta_key, meta_postID, id) {
 // save when the user adds an img tag via the add media modal
 setTimeout(() => { // setTimout > waiting for tinyMCE to load
 
-    document.querySelector('#insert-media-button.insert-media.add_media').addEventListener('click', () => {
-        setTimeout(() => { // setTimout for waiting for modal to load
-            document.querySelector('.media-button.media-button-insert').addEventListener('click', () => { // when modal is opened we need to attach listerner to save button
+    $('[data-editor]').each((index) => { // iterate over all the addd media buttons
+        $('[data-editor]')[index].addEventListener('click', () => {
+            setTimeout(() => { // setTimout for waiting for modal to load
 
-                setTimeout(() => { // setTimeout for waiting for the img tag to be inserted by other tinyMCE events
+                // multiple modals can exists wihout unique identifiers, we need to listen to them all
+                for (let btn of document.querySelectorAll('.media-button.media-button-insert')) {
 
-                    let iFrame = document.querySelector('#editor_ifr').contentDocument.body;
-                    const html = iFrame.innerHTML;
-    
-                    document.querySelector('.rsed_content').innerHTML = html;
-    
-                    autoSave_mainText(html);
+                    btn.addEventListener('click', function saveImage() { // when modal is opened we need to attach listener to save button
 
-                } ,500);
+                        setTimeout(() => { // setTimeout for waiting for the img tag to be inserted into the editor
 
-            });
-        }, 500);
+                            // maintext
+                            if ($('[data-editor]')[index].dataset.editor === 'editor') {
+                                let iFrame = document.querySelector('#editor_ifr').contentDocument.body;
+                                const html = iFrame.innerHTML;
 
+                                document.querySelector('.rsed_content').innerHTML = html;
+
+                                autoSave_mainText(html);
+                            } else { // meta elements adding pictures
+
+                                const id = $('[data-editor]')[index].dataset.editor.substring(7, 8)
+                                const [metaKey, postID] = getMetaData(document.querySelector(`#rsed_${id}`));
+
+                                const iFrame = document.querySelector(`#editor_${id}_ifr`).contentDocument.body;
+                                html = iFrame.innerHTML;
+
+                                document.querySelector(`#rsed_${id}`).innerHTML = html;
+
+                                autoSave_meta(html, metaKey, postID, id);
+
+                                // we need to remove the saveImage click listeners otherwise they will stack up
+                                for (let btn of document.querySelectorAll('.media-button.media-button-insert')) {
+                                    btn.removeEventListener('click', saveImage);
+                                }
+
+                            }
+
+                        }, 1000); // wait image inserted in tinyMCE
+                    });
+                }
+            }, 1000); // wait modal load
+        });
     });
-    
-}, 1000);
-
+}, 1500); // wait load tinyMCE
 
 
 
@@ -587,9 +628,9 @@ setTimeout(() => { // setTimout > waiting for tinyMCE to load
 jQuery(document).ready(() => {
 
     const thumbNail = document.querySelector('#set-post-thumbnail')
-    
+
     if (thumbNail) {
-    
+
         thumbNail.addEventListener('click', () => {
 
             setTimeout(() => {  // needed for waiting for the modal to render
@@ -619,13 +660,13 @@ jQuery(document).ready(() => {
                     save_thumnail(thumbNail_ID);
 
                     // after using media library wordpress insert some image subscripts which not desirable because change of layout
-                    setTimeout(() => {  // waiting for the image subscripts to be rendered before we can remove them
-                        $('#remove-post-thumbnail').remove();
-                        $('#set-post-thumbnail-desc').remove();
-                    }, 500);
+                    // setTimeout(() => {  // waiting for the image subscripts to be rendered before we can remove them
+                    //     $('#remove-post-thumbnail').remove();
+                    //     $('#set-post-thumbnail-desc').remove();
+                    // }, 1000);
 
                 });
-            } ,500);
+            }, 500);
         })
     }
 
@@ -648,10 +689,100 @@ function save_thumnail(thumbNail_ID) {
         data,
         (res) => {
             console.log('succesfully saved thumbnail');
+            window.location.reload(true);
         });
 }
 
 
+
+// pictures editing in the tinyMCE editor
+jQuery(document).ready(($) => {
+    // button container in visual editor when you click on image
+    $(document).on('click', '.mce-container.mce-btn-group', (e) => {
+        pictureEditingSave();
+    });
+    // when click on edit image in visual editor it will open a modal, this targets the update button of the modal
+    $(document).on('click', '.image-details .media-button.media-button-select', (e) => {
+        pictureEditingSave();
+    });
+})
+
+// saves picture when we are editing it via the visual tinyMCE editor 
+function pictureEditingSave() {
+    if (focus === 'main') {
+        let iFrame = document.querySelector('#editor_ifr').contentDocument.body;
+        const html = iFrame.innerHTML;
+        document.querySelector('.rsed_content').innerHTML = html;
+        autoSave_mainText(html);
+    } else {
+        id = focus.substring(5, 6);
+        const iFrame = document.querySelector(`#editor_${id}_ifr`).contentDocument.body;
+        const html = iFrame.innerHTML;
+        const meta_element = document.querySelector(`#rsed_${id}`);
+        meta_element.innerHTML = html;
+        const [metaKey, postID] = getMetaData(meta_element);
+        autoSave_meta(html, metaKey, postID, id);
+    }
+}
+
+
+// drag and drop of images within the non tinyMCE editor:
+jQuery(document).ready(($) => {
+
+    $(document).on('dragend', '', (e) => {
+
+        if (!focus) {
+            return;
+        }
+
+        if (e.target.id === 'mainDiv') {
+            const html = document.querySelector('.rsed_content').innerHTML;
+            document.querySelector('#editor_ifr').contentDocument.body.innerHTML = html;
+            autoSave_mainText(html);
+        } else {
+            id = focus.substring(5, 6);
+            const meta_element = document.querySelector(`#rsed_${id}`);
+            const html = document.querySelector(`#rsed_${id}`).innerHTML;
+            document.querySelector(`#editor_${id}_ifr`).contentDocument.body.innerHTML = html;
+            const [metaKey, postID] = getMetaData(meta_element);
+            autoSave_meta(html, metaKey, postID, id);
+        }
+    });
+});
+
+
+// placeholders logic, when a content or metabox is emtpy a 
+// placeholder need to be there so the user can start typing
+jQuery(document).ready(($) => {
+    initializePlaceholders();
+});
+
+function initializePlaceholders () {
+
+    for (let el in backupHTML) {
+        if (!backupHTML[el]) {
+
+            if(el === 'main') {
+                $(`#mainDiv`).html('<span class="rsed_textPlaceholder">Start typing the main content...</span>');
+            } else {
+                const id = el.substring(5);
+                $(`#rsed_${id}`).html('<span class="rsed_textPlaceholder">Start typing the meta content...</span>');
+            }
+
+        }
+    }
+}
+
+function checkIfPlaceholdersNeeded () {
+
+    console.log(2222);
+
+    if(!($(`#mainDiv`).text())) {
+        console.log(333);
+        $(`#mainDiv`).html('<span class="rsed_textPlaceholder">Start typing the main content...</span>');
+    }
+
+}
 
 
 // https://wordpress.org/plugins/advanced-custom-fields/

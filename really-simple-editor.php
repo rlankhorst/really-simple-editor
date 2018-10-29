@@ -19,7 +19,6 @@ defined( 'ABSPATH' ) or die( 'no access' );
 register_activation_hook( __FILE__ , 'rsed_activate' );
 register_deactivation_hook(__FILE__, 'rsed_deactivate');
 
-
 function rsed_activate () {
     // add_action('admin_menu', 'rsed_initialSetup');
    add_action('admin_init', 'rsed_init');
@@ -38,7 +37,7 @@ function rsed_deactivate () {
 class rsed_Master {
 
     static public $alterContent;
-    static public $BackendSettings;
+    // static public $BackendSettings;
 
     function __construct() {
 
@@ -53,16 +52,16 @@ class rsed_Master {
             $this->alterContent  = new rsed_alterContent();
         }
 
-        if (  is_admin() ) {
-            $this->BackendSettings  = new rsed_BackendSettings();
-        }
+        // if (  is_admin() ) {
+        //     $this->BackendSettings  = new rsed_BackendSettings();
+        // }
 
     }
 
 }
 
 
-add_action( 'plugins_loaded', 'start_plugin',9,1);
+add_action( 'plugins_loaded', 'start_plugin', 9 ,1);
 
 function start_plugin () {
 

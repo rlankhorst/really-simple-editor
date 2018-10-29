@@ -98,11 +98,21 @@
 }
 
 
-.attachment-post-thumbnail:hover {
-    -webkit-filter: invert(.2);
-    filter: invert(.2);
+.rsed_changecolor:hover {
+  opacity: .8;
+  transition: .15s ease-in;
+}
 
-    transition: .3s ease-in;
+.rsed_checkSVG{
+  width: 12px;
+  height: 12px;
+  vertical-align: -2px;
+}
+
+.rsed_textPlaceholder {
+  color: gray;
+  font-size: 13px;
+  opacity: .8;
 }
 
 
