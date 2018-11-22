@@ -8,13 +8,10 @@ Author: RogierLankhorst, willemvanderveen
 */
 
 
-// developement functions
-
-require_once 'developementUtils.php';
-
-
 defined( 'ABSPATH' ) or die( 'no access' );
 
+// development functions
+require_once 'developementUtils.php';
 
 register_activation_hook( __FILE__ , 'rsed_activate' );
 register_deactivation_hook(__FILE__, 'rsed_deactivate');
@@ -41,6 +38,7 @@ class rsed_Master {
 
     function __construct() {
 
+        define('rsed_version', 1.0);
         define('rsed_plugin', plugin_dir_url(__FILE__));
         define('rsed_js', rsed_plugin . '/assets/js/');
         define('rsed_css', rsed_plugin . '/assets/css/');
@@ -49,7 +47,7 @@ class rsed_Master {
         require_once 'admin/backendSettings.php';
 
         if (  !is_admin() ) {
-            $this->alterContent  = new rsed_alterContent();
+            rsed_Master::$alterContent  = new rsed_alterContent();
         }
 
         // if (  is_admin() ) {
@@ -66,14 +64,23 @@ add_action( 'plugins_loaded', 'start_plugin', 9 ,1);
 function start_plugin () {
 
    if (current_user_can('editor') || current_user_can('administrator')) {  // can user edit a post  // check via capabilities
-        $rsed_Master = new rsed_Master();
+
+    $rsed_Master = new rsed_Master();
+
    }
 
 }
 
 
-// https://github.com/rlankhorst/complianz-gdpr
 
+add_action('delete_attachment', 'rsed_delete_attachment_cleanup');
+// Need to clear a option when a user removes the placeholder svg, otherwise the SVG will not be reloaded.
+function rsed_delete_attachment_cleanup ($attachment_id) {
 
+    $thumbnail_id = get_option("rsed_default_thumbnail_id");
 
+    if ($thumbnail_id == $attachment_id) {
+        delete_option('rsed_default_thumbnail_id');
+    }
 
+}

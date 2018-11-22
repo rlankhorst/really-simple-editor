@@ -55,12 +55,9 @@
     color: rgb(0, 79, 0);
 }
 
-
-
 .rsed_danger:hover {
     color: rgb(171, 0, 0);
 }
-
 
 .rsed_normalEditor{
     display: none;
@@ -72,10 +69,15 @@
     cursor: pointer;
 }
 
+.rsed_title:hover {
+  outline: 1px dashed rgba(77, 77, 77, 0.43);
+  outline-offset: 1px;
+  cursor: pointer;
+}
+
 .rsed_hide{
     display: none;
 }
-
 
 .rsed_safeText{
     position: absolute;
@@ -94,13 +96,12 @@
 }
 
 .rsed_noTinyMCE_text{
-    right: 197px;
+  right: calc(50% - 102px);
 }
 
 
 .rsed_changecolor:hover {
   opacity: .8;
-  transition: .15s ease-in;
 }
 
 .rsed_checkSVG{
@@ -111,9 +112,44 @@
 
 .rsed_textPlaceholder {
   color: gray;
-  font-size: 13px;
+  font-size: 15px;
   opacity: .8;
+  font-style: italic;
+  font-weight: normal !important;
 }
+
+#postimagediv {
+  position: relative;
+}
+
+.rsed_editText{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate( -50%, -50% );
+  font-size: 60px;
+  background-color: #272727ba;
+  border-radius: 17px;
+  color: #fdfdfd;
+  border: 4px solid #cacaca;
+  padding: 8px 20px 0px 23px;
+  display: inline-block;
+}
+
+.rsed_editable {
+  position: relative;
+}
+
+.gpp-image-container img[src$='placeholder.png'] {
+  background-color: #fbfbfb;
+  border-radius: 10px;
+  border: 5px solid #efefef;
+}
+
+.rsed_editSVG{
+  height: 60px;
+}
+
 
 
 /* Tooltip grahpics */
