@@ -4,7 +4,9 @@ class rsed_alterContent
 {
 
     private $metaID = 1; 
-    // public $translateble_strings = array
+    public $metaCounter = 1;
+    public $identifier = '';
+    public $hasTinyMCE = false;
 
     public function __construct()
     {
@@ -15,8 +17,22 @@ class rsed_alterContent
         add_action('wp_enqueue_scripts', array($this, 'enqueue'));
         add_filter('post_thumbnail_html', array($this, 'make_post_thumbnail_editable'), 99, 5);
         add_filter('the_editor_content', array($this, 'add_editor_stylesheet'));
+
     }
 
+    public function enqueue()
+    {
+        wp_enqueue_script('rsed_makeContentEditable', rsed_js . 'makeContentEditable.js', array('jquery'), rsed_version);
+        wp_enqueue_style('rsed_makeContentEditable', rsed_css . 'makeContentEditable.css', rsed_version);
+        wp_localize_script(
+            'rsed_makeContentEditable',
+            'rsed_translateStrings',
+            array(
+                'edit_title' =>  __("Start typing the title...", "rsed"),
+                'edit_content' =>   __("Start typing the content...", "rsed"),
+                'edit_meta' =>   __("Start typing the content..", "rsed"),
+            ));
+    }
 
     // adding a div to main content so we can manipulate it via javascript
     public function addToContent($content)
@@ -36,23 +52,16 @@ class rsed_alterContent
 
         $post_id = get_the_ID();
 
-        $content = '<div class="rsed_editable">' . "<div id=\"mainDiv\" class=\"rsed_content rsed_post_{$post_id}\">" . $content . '</div>' . '</div>' . wp_editor($post->post_content, 'editor', $settings);
+        $html = '<div class="rsed_editable">' . "<div id=\"mainDiv\" class=\"rsed_content rsed_post_{$post_id}\">" . $content . '</div>' . '</div>' . wp_editor($post->post_content, 'editor', $settings);
 
-        return $content;
+        $this->identifier = 'main';
+        $this->hasTinyMCE = true;
+        $editButtons = $this->get_template('editIcons.php');
+
+        $html_and_EditBtns = $editButtons . $html;
+
+        return apply_filters('rsed_editable_content_html', $html_and_EditBtns, $post_id);
     }
-
-    public function enqueue()
-    {
-        wp_enqueue_script('rsed_makeContentEditable', rsed_js . 'makeContentEditable.js', array('jquery'), rsed_version);
-        wp_enqueue_style('rsed_makeContentEditable', rsed_css . 'makeContentEditable.css', rsed_version);
-        wp_localize_script(
-            'rsed_makeContentEditable',
-            'rsed_translateStrings',
-            array(
-                'strings' => 'test'
-            ));
-    }
-
 
     /*
         1.  Inserts a placeholder if no image is present 
@@ -130,13 +139,25 @@ class rsed_alterContent
         $this->metaID += 1;
 
         if ($isFieldEditable === 'wysiwyg') {
-            return "<div class=\"rsed_meta_canUpdate rsed_{$meta_key}_unique123_{$post_id} rsed_hasTinyMCE\" id=\"" . $id . "\">" .
+            $this->hasTinyMCE = true;
+            $html =  "<div class=\"rsed_meta_canUpdate rsed_{$meta_key}_unique123_{$post_id} rsed_hasTinyMCE\" id=\"" . $id . "\">" .
              $result . '</div>' . wp_editor($post->post_content, "editor_{$idNr}", $settings);
         } else {
-            return "<div class=\"rsed_meta_canUpdate rsed_{$meta_key}_unique123_{$post_id}\" id=\"" . $id . "\">"  . $result . '</div>';
+            $this->hasTinyMCE = false;
+            $html = "<div class=\"rsed_meta_canUpdate rsed_{$meta_key}_unique123_{$post_id}\" id=\"" . $id . "\">"  . $result . '</div>';
         }
 
+        $this->identifier = $this->metaCounter;
+        $editButtons = $this->get_template('editIcons.php');
+
+        $html_and_EditBtns = $editButtons . $html;
+
+        $this->metaCounter++;
+
+        return apply_filters('rsed_editable_content_html', $html_and_EditBtns, $object_id);
+
     }
+
 
     public function addToTitle ($title, $id) {
 
@@ -146,7 +167,15 @@ class rsed_alterContent
             return $title;
         }
 
-        return "<div class=\"rsed_title rsed_post_{$id}\">$title</div>";
+        $title = "<div class=\"rsed_title rsed_post_{$id}\">$title</div>";
+
+        $this->identifier = 'title';
+        $this->hasTinyMCE = false;
+        $editButtons = $this->get_template('editIcons.php');
+
+        $html_and_EditBtns = $editButtons . $title;
+
+        return apply_filters('rsed_editable_content_html', $html_and_EditBtns, $id);
     }
 
 
@@ -259,6 +288,27 @@ class rsed_alterContent
 
         $editor_styles = array_merge( $editor_styles, $stylesheets );
     }
+
+
+    public function get_template($file)
+    {
+        $plugin_path = $plugin_dir = ABSPATH . 'wp-content/plugins/really-simple-editor/';
+
+        $file = trailingslashit($plugin_path) . 'templates/' . $file;
+        $theme_file = trailingslashit(get_stylesheet_directory()) . dirname($plugin_path) . $file;
+        if (file_exists($theme_file)) {
+            $file = $theme_file;
+        }
+        if (strpos($file, '.php') !== FALSE) {
+            ob_start();
+            require $file;
+            $contents = ob_get_clean();
+        } else {
+            $contents = file_get_contents($file);
+        }
+        return $contents;
+    }
+
 
 }
 

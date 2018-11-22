@@ -25,9 +25,9 @@
     padding-top: 4px;
     height: 31px;
     cursor: pointer;
+    font-size: initial;
     color: rgb(43, 43, 43);
 }
-
 
 .rsed_icons{
     display: flex;

@@ -1,8 +1,4 @@
-const editSVG = `<svg  class="rsed_normalEditor" aria-hidden="true" data-prefix="fas" data-icon="pencil-alt" class="svg-inline--fa fa-pencil-alt fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" ><path fill="currentColor" d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"></path></svg>
-    <svg  class="rsed_richEditor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas" data-icon="edit" class="svg-inline--fa fa-edit fa-w-18" role="img" viewBox="0 0 576 512"><path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"/></svg>`;
 const editSVG_image = `<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="far" data-icon="edit" class="svg-inline--fa fa-edit fa-w-18 rsed_editSVG" role="img" viewBox="0 0 576 512"><path fill="currentColor" d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg>`;
-const backArrowSVG = '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas" data-icon="undo-alt" class="svg-inline--fa fa-undo-alt fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M255.545 8c-66.269.119-126.438 26.233-170.86 68.685L48.971 40.971C33.851 25.851 8 36.559 8 57.941V192c0 13.255 10.745 24 24 24h134.059c21.382 0 32.09-25.851 16.971-40.971l-41.75-41.75c30.864-28.899 70.801-44.907 113.23-45.273 92.398-.798 170.283 73.977 169.484 169.442C423.236 348.009 349.816 424 256 424c-41.127 0-79.997-14.678-110.63-41.556-4.743-4.161-11.906-3.908-16.368.553L89.34 422.659c-4.872 4.872-4.631 12.815.482 17.433C133.798 479.813 192.074 504 256 504c136.966 0 247.999-111.033 248-247.998C504.001 119.193 392.354 7.755 255.545 8z"/></svg>'
-const closeSVG = '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="far" data-icon="times-circle" class="svg-inline--fa fa-times-circle fa-w-16" role="img" viewBox="0 0 512 512" ><path   fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm101.8-262.2L295.6 256l62.2 62.2c4.7 4.7 4.7 12.3 0 17l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L256 295.6l-62.2 62.2c-4.7 4.7-12.3 4.7-17 0l-22.6-22.6c-4.7-4.7-4.7-12.3 0-17l62.2-62.2-62.2-62.2c-4.7-4.7-4.7-12.3 0-17l22.6-22.6c4.7-4.7 12.3-4.7 17 0l62.2 62.2 62.2-62.2c4.7-4.7 12.3-4.7 17 0l22.6 22.6c4.7 4.7 4.7 12.3 0 17z"/></svg>';
 const checkSVG = `<svg class="rsed_checkSVG" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-prefix="fas" data-icon="check" class="svg-inline--fa fa-check fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/><path xmlns="http://www.w3.org/2000/svg" fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>`
 // Icons from: https://fontawesome.com  
 // Licence:  https://fontawesome.com/license
@@ -63,7 +59,6 @@ function makeContentEditable() {
 
     }
 
-    addEditIcons('.rsed_editable', 'main');
     addEditableListener(`main`);
 }
 
@@ -73,54 +68,13 @@ function makeMetaEditable() {
     const metaElements = document.querySelectorAll('.rsed_meta_canUpdate');
 
     for (let i = 0; i < metaElements.length; i++) {
-
-        if (metaElements[i].classList.value.indexOf('rsed_hasTinyMCE') !== -1) {
-            addEditIcons(`#rsed_${i + 1}`, (i + 1));
-        } else {
-            addEditIcons(`#rsed_${i + 1}`, (i + 1), true);
-        }
-
         addEditableListener(`${i + 1}`);
-
     }
 }
 
 
 function makeTitleEditable() {
-    addEditIcons('.rsed_title', 'title', true);
     addEditableListener(`title`);
-}
-
-
-function addEditIcons(selector, identifier, noTinyMCE) {
-
-    if (noTinyMCE) {
-        jQuery(selector).before(
-            `
-<div class="rsed_icons_container rsed_editButtons_${identifier}">
-    <div class="rsed_icons rsed_icons_noTinyMCE">
-        <div data-balloon="Undo changes" data-balloon-pos="up" onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
-        <div data-balloon="Close editor" data-balloon-pos="up" class="rsed_editButtons rsed_danger">${closeSVG}</div>
-    </div>
-    <span class="rsed_hide rsed_noTinyMCE_text" id="rsed_safeText_${identifier}">Saving...</span>
-</div>
-`
-        );
-    } else {
-        jQuery(selector).before(
-            `
-<div class="rsed_icons_container rsed_editButtons_${identifier}">
-    <div class="rsed_icons">
-        <div data-balloon="Switch editor mode" data-balloon-pos="up" onclick="ToggleEditor()" class="rsed_editButtons rsed_editor rsed_dontClose">${editSVG}</div>
-        <div data-balloon="Undo changes" data-balloon-pos="up" onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose">${backArrowSVG}</div>
-        <div data-balloon="Close editor" data-balloon-pos="up" class="rsed_editButtons rsed_danger">${closeSVG}</div>
-    </div>
-    <span class="rsed_hide" id="rsed_safeText_${identifier}">Saving...</span>
-</div>
-`
-        );
-    }
-
 }
 
 function addEditableListener(identifier) {
@@ -143,10 +97,6 @@ function addEditableListener(identifier) {
 
     editableContent[context].addEventListener('click', (event) => {
 
-        if (focus === 'title') {
-            event.target.classList.add('title_of_post');
-        }
-
         if (focus && focus !== context) {
             closeStyles(focus);
             selectNormalEditor(context.body);
@@ -155,18 +105,22 @@ function addEditableListener(identifier) {
 
         focus = context;
 
+        if (focus === 'title') {
+            event.target.classList.add('title_of_post');
+        }
+
         if (focus === 'main') {
-            if ($('#mainDiv').text() === 'Start typing the main content...') {
+            if ($('#mainDiv').text() === window.rsed_translateStrings.edit_content) {
                 $('#mainDiv').text('');
                 $(`#mainDiv`).removeClass('rsed_textPlaceholder');
             }
         } else if (focus === 'title') {
-            if ($('.rsed_title.rsed_selected').text() === 'Start typing the title...') {
+            if ($('.rsed_title.rsed_selected').text() === window.rsed_translateStrings.edit_title) {
                 $('.rsed_title').text('');
                 $(`.rsed_title`).removeClass('rsed_textPlaceholder');
             }
-        }  else {
-            if ($(`#rsed_${identifier}`).text() === 'Start typing the meta content...') {
+        } else {
+            if ($(`#rsed_${identifier}`).text() === window.rsed_translateStrings.edit_meta) {
                 $(`#rsed_${identifier}`).text('');
                 $(`#rsed_${identifier}`).removeClass('rsed_textPlaceholder');
             }
@@ -652,6 +606,7 @@ function autoSave_meta(html, meta_key, meta_postID, id) {
 }//////////////////////////
 
 
+
 // when clicking on Add media on TinyMCE editor we want trigger a 
 // save when the user adds an img tag via the add media modal
 setTimeout(() => { // setTimout > waiting for tinyMCE to load
@@ -703,31 +658,44 @@ setTimeout(() => { // setTimout > waiting for tinyMCE to load
 }, 1500); // wait load tinyMCE
 
 
+
+
 // TD rewrite of the above functionality
-
 // jQuery(document).ready(() => {
-//     $('.media-button.media-button-insert').on('click', () => {
-//         // maintext
-//         if (jQuery('[data-editor]')[index].dataset.editor === 'editor') {
-//             let iFrame = document.querySelector('#editor_ifr').contentDocument.body;
-//             const html = iFrame.innerHTML;
 
-//             document.querySelector('.rsed_content').innerHTML = html;
+//     jQuery('button').on('click', (e) => {
 
-//             autoSave_mainText(html);
-//         } else { // meta elements adding pictures
+//         console.dir(e);
+//         console.dir(jQuery('[data-editor]'));
 
-//             const id = jQuery('[data-editor]')[index].dataset.editor.substring(7, 8)
-//             const [metaKey, postID] = getMetaData(document.querySelector(`#rsed_${id}`));
-
-//             const iFrame = document.querySelector(`#editor_${id}_ifr`).contentDocument.body;
-//             html = iFrame.innerHTML;
-
-//             document.querySelector(`#rsed_${id}`).innerHTML = html;
-
-//             autoSave_meta(html, metaKey, postID, id);
-
+//         if (!e.target.classList.contains('insert-media')) {
+//             return;
 //         }
+
+
+//         jQuery('[data-editor]').each((index) => {
+
+//             // maintext
+//             if (jQuery('[data-editor]')[index].dataset.editor === 'editor') {
+//                 let iFrame = document.querySelector('#editor_ifr').contentDocument.body;
+//                 const html = iFrame.innerHTML;
+
+//                 document.querySelector('.rsed_content').innerHTML = html;
+
+//                 autoSave_mainText(html);
+//             } else { // meta elements adding pictures
+
+//                 const id = jQuery('[data-editor]')[index].dataset.editor.substring(7, 8)
+//                 const [metaKey, postID] = getMetaData(document.querySelector(`#rsed_${id}`));
+
+//                 const iFrame = document.querySelector(`#editor_${id}_ifr`).contentDocument.body;
+//                 html = iFrame.innerHTML;
+
+//                 document.querySelector(`#rsed_${id}`).innerHTML = html;
+
+//                 autoSave_meta(html, metaKey, postID, id);
+//             }
+//         });
 //     });
 // });
 
@@ -857,24 +825,24 @@ jQuery(document).ready(($) => {
 function checkIfPlaceholdersNeeded() {
 
     if (!($(`.rsed_title`).text())) {
-        $(`.rsed_title`).text('Start typing the title...');
+        $(`.rsed_title`).text(window.rsed_translateStrings.edit_title);
         $(`.rsed_title`).addClass('rsed_textPlaceholder');
     }
 
     if (!($(`.title_of_post`).text())) {
-        $(`.title_of_post`).text('Start typing the title...');
+        $(`.title_of_post`).text(window.rsed_translateStrings.edit_title);
         $(`.title_of_post`).addClass('rsed_textPlaceholder');
     }
 
     if (!($(`#mainDiv`).text())) {
-        $(`#mainDiv`).text('Start typing the main content...');
+        $(`#mainDiv`).text(window.rsed_translateStrings.edit_content);
         $(`#mainDiv`).addClass('rsed_textPlaceholder');
     }
 
     $(`.rsed_meta_canUpdate`).each((index) => {
 
         if (!($(`#rsed_${index + 1}`).text())) {
-            $(`#rsed_${index + 1}`).text('Start typing the meta content...');
+            $(`#rsed_${index + 1}`).text(window.rsed_translateStrings.edit_meta);
             $(`#rsed_${index + 1}`).addClass('rsed_textPlaceholder');
         }
 
@@ -896,7 +864,7 @@ function thumbnail_show_EditableText() {
 
 
 // the wrapping div can be also attached to titles in the menu.
-function checkTitleforAnchorTags () {
+function checkTitleforAnchorTags() {
 
     for (let title of document.querySelectorAll('.rsed_title')) {
         if (title.parentElement.tagName === 'A') {
