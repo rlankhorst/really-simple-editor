@@ -29,7 +29,7 @@ class rsed_BackendSettings
 
     public function editor_template()
     {
-        require __DIR__ . '/../templates/settings.php';
+        require rsed_path . '/templates/settings.php';
     }
 
 
@@ -75,7 +75,7 @@ class rsed_BackendSettings
     // returns special string wysiwyg to indicate that the editor is wysiwyg
     private function assessFieldType($field)
     {
-        require __DIR__ . '/../taxonomies/field-types.php';
+        require rsed_path . '/taxonomies/field-types.php';
 
         if ($field == 'wysiwyg') {
             return 'wysiwyg';

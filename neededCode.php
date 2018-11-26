@@ -1,5 +1,5 @@
 <?php
- // this file is for developement only
+ // this file is for development only
 
  /////// How to programmatically update a post ////////////////////////////////////
 
