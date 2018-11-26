@@ -189,7 +189,7 @@ class rsed_alterContent
             return $thumbnail_id;
         }
 
-        $filepath = rsed_url . "/assets/images/placeholder.png";
+        $filepath = rsed_path . "/assets/images/placeholder.png";
         $filename = "placeholder.png";
 
         $uploads = wp_upload_dir();
