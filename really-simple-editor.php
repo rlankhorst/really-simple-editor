@@ -30,9 +30,6 @@
 
 defined( 'ABSPATH' ) or die( 'no access' );
 
-// development functions
-require_once 'developementUtils.php';
-
 register_activation_hook( __FILE__ , 'rsed_activate' );
 register_deactivation_hook(__FILE__, 'rsed_deactivate');
 add_action("after_switch_theme", "rsed_theme_switch");
@@ -58,7 +55,7 @@ class rsed_Master {
 
     static public $alterContent;
     static public $BackendSettings;
-    
+
     function __construct() {
 
         define('rsed_url', plugin_dir_url(__FILE__));
