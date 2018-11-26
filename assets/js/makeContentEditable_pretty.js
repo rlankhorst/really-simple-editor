@@ -540,16 +540,16 @@ function autoSave_mainText(html) {
         post_ID: id
     };
 
-    const safeTextBox = document.getElementById('rsed_safeText_main');
+    const saveTextBox = document.getElementById('rsed_saveText_main');
 
-    safeTextBox.innerText = window.rsed_translateStrings.edit_saving;
-    safeTextBox.classList.add('rsed_safeText');
+    saveTextBox.innerText = window.rsed_translateStrings.edit_saving;
+    saveTextBox.classList.add('rsed_saveText');
 
     jQuery.post(
         url,
         data,
         (res) => {
-            safeTextBox.innerHTML = `${checkSVG} ${window.rsed_translateStrings.edit_saved}`;
+            saveTextBox.innerHTML = `${checkSVG} ${window.rsed_translateStrings.edit_saved}`;
             console.log('succesfully saved post');
         });
 }
@@ -565,16 +565,16 @@ function autoSave_title() {
         post_ID: id
     };
 
-    const safeTextBox = document.getElementById('rsed_safeText_title');
+    const saveTextBox = document.getElementById('rsed_saveText_title');
 
-    safeTextBox.innerText = window.rsed_translateStrings.edit_saving;
-    safeTextBox.classList.add('rsed_safeText');
+    saveTextBox.innerText = window.rsed_translateStrings.edit_saving;
+    saveTextBox.classList.add('rsed_saveText');
 
     jQuery.post(
         url,
         data,
         (res) => {
-            safeTextBox.innerHTML = `${checkSVG} ${window.rsed_translateStrings.edit_saved}`;
+            saveTextBox.innerHTML = `${checkSVG} ${window.rsed_translateStrings.edit_saved}`;
             console.log('succesfully saved title');
         });
 
@@ -590,16 +590,16 @@ function autoSave_meta(html, meta_key, meta_postID, id) {
         meta_key,
     };
 
-    const safeTextBox = document.getElementById(`rsed_safeText_${id}`);
+    const saveTextBox = document.getElementById(`rsed_saveText_${id}`);
 
-    safeTextBox.innerText = window.rsed_translateStrings.edit_saving;
-    safeTextBox.classList.add('rsed_safeText');
+    saveTextBox.innerText = window.rsed_translateStrings.edit_saving;
+    saveTextBox.classList.add('rsed_saveText');
 
     jQuery.post(
         url,
         data,
         (res) => {
-            safeTextBox.innerHTML = `${checkSVG} ${window.rsed_translateStrings.edit_saved}`;
+            saveTextBox.innerHTML = `${checkSVG} ${window.rsed_translateStrings.edit_saved}`;
             console.log('succesfully saved meta');
         });
 
@@ -700,7 +700,7 @@ setTimeout(() => { // setTimout > waiting for tinyMCE to load
 // });
 
 
-//// safe when a user sets the thumbnail image:
+//// save when a user sets the thumbnail image:
 jQuery(document).ready(() => {
 
     const thumbNail = document.querySelector('#set-post-thumbnail')
@@ -748,7 +748,7 @@ function save_thumnail(thumbNail_ID) {
     const id = document.querySelector('#mainDiv').classList[1].substring(index + 10);
 
     const data = {
-        action: 'rsed_safe_thumbnail',
+        action: 'rsed_save_thumbnail',
         post_ID: id,
         thumbNail_ID
     };

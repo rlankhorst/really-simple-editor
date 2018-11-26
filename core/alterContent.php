@@ -189,7 +189,7 @@ class rsed_alterContent
             return $thumbnail_id;
         }
 
-        $filepath = rsed_plugin . "/assets/images/placeholder.png";
+        $filepath = rsed_url . "/assets/images/placeholder.png";
         $filename = "placeholder.png";
 
         $uploads = wp_upload_dir();
@@ -317,8 +317,8 @@ class rsed_alterContent
 // AJAX handlers
 add_action('wp_ajax_autoSave_mainText', 'rsed_update_post_mainText');
 add_action('wp_ajax_autoSave_meta', 'rsed_update_post_meta');
-add_action('wp_ajax_autoSave_title', 'rsed_safe_title');
-add_action('wp_ajax_rsed_safe_thumbnail', 'rsed_safe_thumbnail');
+add_action('wp_ajax_autoSave_title', 'rsed_save_title');
+add_action('wp_ajax_rsed_save_thumbnail', 'rsed_save_thumbnail');
 
 function rsed_update_post_mainText()
 {
@@ -344,7 +344,7 @@ function rsed_update_post_meta()
     exit;
 }
 
-function rsed_safe_thumbnail()
+function rsed_save_thumbnail()
 {
     $post_ID = intval($_POST['post_ID']);
     $thumbNail_ID = intval($_POST['thumbNail_ID']);
@@ -352,7 +352,7 @@ function rsed_safe_thumbnail()
     set_post_thumbnail($post_ID, $thumbNail_ID);
 }
 
-function rsed_safe_title () {
+function rsed_save_title () {
 
     $html = wp_kses_post($_POST['html']);
     $post_ID = intval($_POST['post_ID']);

@@ -28,7 +28,6 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 defined( 'ABSPATH' ) or die( 'no access' );
 
 // development functions
@@ -59,13 +58,19 @@ class rsed_Master {
 
     static public $alterContent;
     static public $BackendSettings;
-
+    
     function __construct() {
 
-        define('rsed_version', 1.0);
-        define('rsed_plugin', plugin_dir_url(__FILE__));
-        define('rsed_js', rsed_plugin . '/assets/js/');
-        define('rsed_css', rsed_plugin . '/assets/css/');
+        define('rsed_url', plugin_dir_url(__FILE__));
+        define('rsed_path', plugin_dir_path(__FILE__));
+        define('rsed_plugin', plugin_basename(__FILE__));
+        define('rsed_plugin_file', __FILE__);
+
+        define('rsed_js', rsed_url . '/assets/js/');
+        define('rsed_css', rsed_url . '/assets/css/');
+        require_once(ABSPATH.'wp-admin/includes/plugin.php');
+        $plugin_data = get_plugin_data( __FILE__ );
+        define('rsed_version', $plugin_data['Version'] );
 
         require_once 'core/alterContent.php';
         require_once 'admin/backendSettings.php';

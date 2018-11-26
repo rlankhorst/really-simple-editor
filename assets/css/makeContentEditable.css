@@ -79,7 +79,7 @@
     display: none;
 }
 
-.rsed_safeText{
+.rsed_saveText{
     position: absolute;
     top: 0px;
     right: calc(50% - 115px);
