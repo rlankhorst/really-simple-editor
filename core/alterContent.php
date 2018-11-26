@@ -88,7 +88,7 @@ class rsed_alterContent
             }
 
             if (is_singular()) {
-                $thumbnail_id = $this->add_placeholder_to_media_library();
+                $thumbnail_id = $this->get_placeholder_thumbnail_id();
                 return $thumbnail_id;
             }
 
@@ -186,7 +186,7 @@ class rsed_alterContent
     }
 
 
-    private function add_placeholder_to_media_library () {
+    private function get_placeholder_thumbnail_id() {
 
         $thumbnail_id = get_option("rsed_default_thumbnail_id");
 
