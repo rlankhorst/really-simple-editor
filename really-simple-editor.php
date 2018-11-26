@@ -57,7 +57,7 @@ function rsed_deactivate () {
 
 class rsed_Master {
 
-    static public $alterContent;
+    public $alterContent;
     // static public $BackendSettings;
 
     function __construct() {
@@ -65,6 +65,9 @@ class rsed_Master {
         define('rsed_plugin', plugin_dir_url(__FILE__));
         define('rsed_js', rsed_plugin . '/assets/js/');
         define('rsed_css', rsed_plugin . '/assets/css/');
+        require_once(ABSPATH.'wp-admin/includes/plugin.php');
+        $plugin_data = get_plugin_data( __FILE__ );
+        define('rsed_version', $plugin_data['Version'] );
 
         require_once 'core/alterContent.php';
         require_once 'admin/backendSettings.php';
