@@ -18,6 +18,6 @@ $closeSVG = '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-pre
         <div data-balloon="Undo changes" data-balloon-pos="up" onclick="revertText(event)" class="rsed_editButtons rsed_danger rsed_dontClose"><?php echo $backArrowSVG ?></div>
         <div data-balloon="Close editor" data-balloon-pos="up" class="rsed_editButtons rsed_danger"><?php echo $closeSVG ?></div>
     </div>
-    <span class="rsed_hide <?php echo rsed_Master::$alterContent->hasTinyMCE ? '' : 'rsed_noTinyMCE_text'?>" id="rsed_safeText_<?php echo rsed_Master::$alterContent->identifier ?>">Saving...</span>
+    <span class="rsed_hide <?php echo rsed_Master::$alterContent->hasTinyMCE ? '' : 'rsed_noTinyMCE_text'?>" id="rsed_saveText_<?php echo rsed_Master::$alterContent->identifier ?>">Saving...</span>
 </div>
 

@@ -540,10 +540,10 @@ function autoSave_mainText(html) {
         post_ID: id
     };
 
-    const safeTextBox = document.getElementById('rsed_safeText_main');
+    const safeTextBox = document.getElementById('rsed_saveText_main');
 
     safeTextBox.innerText = 'Saving...';
-    safeTextBox.classList.add('rsed_safeText');
+    safeTextBox.classList.add('rsed_saveText');
 
     jQuery.post(
         url,
@@ -565,10 +565,10 @@ function autoSave_title() {
         post_ID: id
     };
 
-    const safeTextBox = document.getElementById('rsed_safeText_title');
+    const safeTextBox = document.getElementById('rsed_saveText_title');
 
     safeTextBox.innerText = 'Saving...';
-    safeTextBox.classList.add('rsed_safeText');
+    safeTextBox.classList.add('rsed_saveText');
 
     jQuery.post(
         url,
@@ -590,10 +590,10 @@ function autoSave_meta(html, meta_key, meta_postID, id) {
         meta_key,
     };
 
-    const safeTextBox = document.getElementById(`rsed_safeText_${id}`);
+    const safeTextBox = document.getElementById(`rsed_saveText_${id}`);
 
     safeTextBox.innerText = 'Saving...';
-    safeTextBox.classList.add('rsed_safeText');
+    safeTextBox.classList.add('rsed_saveText');
 
     jQuery.post(
         url,
