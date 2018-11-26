@@ -2,7 +2,6 @@
 
 class rsed_alterContent
 {
-
     private $metaID = 1; 
     public $metaCounter = 1;
     public $identifier = '';
@@ -79,8 +78,12 @@ class rsed_alterContent
         if ($meta_key === '_thumbnail_id') {
 
             $table = $wpdb->prefix . 'postmeta';
-
-            $thumbnail_id = $wpdb->get_var( "SELECT meta_value FROM $table WHERE meta_key =  '_thumbnail_id' AND post_id = $object_id" );
+            /*
+             * We cannot use built in getpostmeta functions, as this would run this same filter, causing a loop. ]
+             * We need to bypass the filters.
+             *
+             * */
+            $thumbnail_id = $wpdb->get_var( $wpdb->prepare("SELECT meta_value FROM $table WHERE meta_key =  '_thumbnail_id' AND post_id = %s", $object_id) );
 
             if ($thumbnail_id) {
                 return $metadata;
@@ -101,11 +104,15 @@ class rsed_alterContent
         // 2.  Adds a div to the metadata
 
         $table = $wpdb->prefix . 'postmeta';
-
+        /*
+         * We cannot use built in getpostmeta functions, as this would run this same filter, causing a loop. ]
+         * We need to bypass the filters.
+         *
+         * */
         $result = $wpdb->get_results($wpdb->prepare("
-        SELECT * FROM $table
-        WHERE meta_key = %s 
-        AND post_id = %d",
+            SELECT * FROM $table
+            WHERE meta_key = %s 
+            AND post_id = %d",
             $meta_key, $object_id
         ));
 
@@ -169,7 +176,7 @@ class rsed_alterContent
             return $title;
         }
 
-        $title = "<div class=\"rsed_title rsed_post_{$id}\">$title</div>";
+        $title = "<div class=\"rsed_title rsed_post_{$id}\">".esc_html($title)."</div>";
 
         $this->identifier = 'title';
         $this->hasTinyMCE = false;
