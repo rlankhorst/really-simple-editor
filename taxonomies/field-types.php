@@ -1,4 +1,5 @@
 <?php
+defined( 'ABSPATH' ) or die( 'no access' );
 
 // field types which are supported by the plugin
 $rsed_field_types = [
