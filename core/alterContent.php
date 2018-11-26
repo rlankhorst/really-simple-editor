@@ -2,7 +2,6 @@
 
 class rsed_alterContent
 {
-
     private $metaID = 1; 
     public $metaCounter = 1;
     public $identifier = '';
@@ -13,11 +12,9 @@ class rsed_alterContent
         add_filter('the_content', array($this, 'addToContent'));
         add_filter('get_post_metadata', array($this, 'addToMeta'), 100, 4);
         add_filter('the_title', array($this, 'addToTitle'), 10, 2);
-
         add_action('wp_enqueue_scripts', array($this, 'enqueue'));
         add_filter('post_thumbnail_html', array($this, 'make_post_thumbnail_editable'), 99, 5);
         add_filter('the_editor_content', array($this, 'add_editor_stylesheet'));
-
     }
 
     public function enqueue()
@@ -79,8 +76,12 @@ class rsed_alterContent
         if ($meta_key === '_thumbnail_id') {
 
             $table = $wpdb->prefix . 'postmeta';
-
-            $thumbnail_id = $wpdb->get_var( "SELECT meta_value FROM $table WHERE meta_key =  '_thumbnail_id' AND post_id = $object_id" );
+            /*
+             * We cannot use built in getpostmeta functions, as this would run this same filter, causing a loop. ]
+             * We need to bypass the filters.
+             *
+             * */
+            $thumbnail_id = $wpdb->get_var( $wpdb->prepare("SELECT meta_value FROM $table WHERE meta_key =  '_thumbnail_id' AND post_id = %s", $object_id) );
 
             if ($thumbnail_id) {
                 return $metadata;
@@ -101,11 +102,15 @@ class rsed_alterContent
         // 2.  Adds a div to the metadata
 
         $table = $wpdb->prefix . 'postmeta';
-
+        /*
+         * We cannot use built in getpostmeta functions, as this would run this same filter, causing a loop. ]
+         * We need to bypass the filters.
+         *
+         * */
         $result = $wpdb->get_results($wpdb->prepare("
-        SELECT * FROM $table
-        WHERE meta_key = %s 
-        AND post_id = %d",
+            SELECT * FROM $table
+            WHERE meta_key = %s 
+            AND post_id = %d",
             $meta_key, $object_id
         ));
 
@@ -169,7 +174,7 @@ class rsed_alterContent
             return $title;
         }
 
-        $title = "<div class=\"rsed_title rsed_post_{$id}\">$title</div>";
+        $title = "<div class=\"rsed_title rsed_post_{$id}\">".esc_html($title)."</div>";
 
         $this->identifier = 'title';
         $this->hasTinyMCE = false;
@@ -316,10 +321,6 @@ class rsed_alterContent
 
 // AJAX handlers
 add_action('wp_ajax_autoSave_mainText', 'rsed_update_post_mainText');
-add_action('wp_ajax_autoSave_meta', 'rsed_update_post_meta');
-add_action('wp_ajax_autoSave_title', 'rsed_save_title');
-add_action('wp_ajax_rsed_save_thumbnail', 'rsed_save_thumbnail');
-
 function rsed_update_post_mainText()
 {
     $html = wp_kses_post($_POST['html']);
@@ -334,6 +335,8 @@ function rsed_update_post_mainText()
     exit;
 }
 
+
+add_action('wp_ajax_autoSave_meta', 'rsed_update_post_meta');
 function rsed_update_post_meta()
 {
     $html = wp_kses_post($_POST['html']);
@@ -344,14 +347,17 @@ function rsed_update_post_meta()
     exit;
 }
 
+add_action('wp_ajax_rsed_save_thumbnail', 'rsed_save_thumbnail');
 function rsed_save_thumbnail()
 {
     $post_ID = intval($_POST['post_ID']);
     $thumbNail_ID = intval($_POST['thumbNail_ID']);
 
     set_post_thumbnail($post_ID, $thumbNail_ID);
+    exit;
 }
 
+add_action('wp_ajax_autoSave_title', 'rsed_save_title');
 function rsed_save_title () {
 
     $html = wp_kses_post($_POST['html']);
@@ -363,4 +369,5 @@ function rsed_save_title () {
     );
 
     wp_update_post($updatedPost);
+    exit;
 }
