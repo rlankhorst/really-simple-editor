@@ -175,6 +175,11 @@ class rsed_alterContent
             return $title;
         }
 
+        //don't do this on the archive pages
+        if (is_archive() || is_author() || is_category() || is_home() || is_tag()){
+            return $title;
+        }
+
         $title = "<div class=\"rsed_title rsed_post_{$id}\">".esc_html($title)."</div>";
 
         $this->identifier = 'title';

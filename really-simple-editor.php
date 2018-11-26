@@ -88,9 +88,7 @@ add_action( 'plugins_loaded', 'start_plugin', 9 ,1);
 function start_plugin () {
 
    if (current_user_can('edit_posts')) {  // can user edit a post  // check via capabilities
-
-    $rsed_Master = new rsed_Master();
-
+        $rsed_Master = new rsed_Master();
    }
 
 }
