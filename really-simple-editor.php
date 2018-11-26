@@ -36,26 +36,29 @@ require_once 'developementUtils.php';
 
 register_activation_hook( __FILE__ , 'rsed_activate' );
 register_deactivation_hook(__FILE__, 'rsed_deactivate');
+add_action("after_switch_theme", "rsed_theme_switch");
 
 function rsed_activate () {
-    // add_action('admin_menu', 'rsed_initialSetup');
    add_action('admin_init', 'rsed_init');
 }
 
-function rsed_init () {
-    // $rsed_Master::$BackendSettings->parse_CMB2_boxes;
+function rsed_deactivate () {
+    delete_option('rsed_default_thumbnail_id');
 }
 
+function rsed_init () {
+    rsed_Master::$BackendSettings->parse_CMB2_boxes();
+}
 
-function rsed_deactivate () {
-    
+function rsed_theme_switch () {
+    add_action('admin_init', 'rsed_init');
 }
 
 
 class rsed_Master {
 
     static public $alterContent;
-    // static public $BackendSettings;
+    static public $BackendSettings;
 
     function __construct() {
 
@@ -71,9 +74,7 @@ class rsed_Master {
             rsed_Master::$alterContent  = new rsed_alterContent();
         }
 
-        // if (  is_admin() ) {
-        //     $this->BackendSettings  = new rsed_BackendSettings();
-        // }
+        rsed_Master::$BackendSettings  = new rsed_BackendSettings();
 
     }
 
@@ -84,7 +85,7 @@ add_action( 'plugins_loaded', 'start_plugin', 9 ,1);
 
 function start_plugin () {
 
-   if (current_user_can('editor') || current_user_can('administrator')) {  // can user edit a post  // check via capabilities
+   if (current_user_can('edit_posts')) {  // can user edit a post  // check via capabilities
 
     $rsed_Master = new rsed_Master();
 
@@ -95,7 +96,7 @@ function start_plugin () {
 
 
 add_action('delete_attachment', 'rsed_delete_attachment_cleanup');
-// Need to clear a option when a user removes the placeholder svg, otherwise the SVG will not be reloaded.
+// Need to clear a option when a user removes the placeholder img, otherwise the img will not be reloaded.
 function rsed_delete_attachment_cleanup ($attachment_id) {
 
     $thumbnail_id = get_option("rsed_default_thumbnail_id");

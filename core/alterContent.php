@@ -31,6 +31,8 @@ class rsed_alterContent
                 'edit_title' =>  __("Start typing the title...", "rsed"),
                 'edit_content' =>   __("Start typing the content...", "rsed"),
                 'edit_meta' =>   __("Start typing the content..", "rsed"),
+                'edit_saving' =>  __("Saving...", "rsed"),
+                'edit_saved' =>  __("Saved", "rsed"),
             ));
     }
 

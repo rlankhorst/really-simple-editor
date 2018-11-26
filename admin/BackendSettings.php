@@ -5,7 +5,7 @@ class rsed_BackendSettings
 
     public function __construct()
     {
-        add_action('admin_menu', array($this, 'extend_settings'));
+        // add_action('admin_menu', array($this, 'extend_settings'));
         add_action('admin_menu', array($this, 'parse_CMB2_boxes'));
     }
 
@@ -33,11 +33,14 @@ class rsed_BackendSettings
     }
 
 
-
     // returns an array of all the meta which the user
     // potentially can set editable
     public function parse_CMB2_boxes()
     {
+        if (!class_exists('CMB2_Boxes')) {
+            return;
+        }
+
         $CMB2_fields = CMB2_Boxes::get_all();
 
         $metaBoxProtected = wp_list_pluck($CMB2_fields, 'meta_box');
