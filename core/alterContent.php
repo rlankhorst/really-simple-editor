@@ -71,8 +71,13 @@ class rsed_alterContent
     public function addToMeta($metadata, $object_id, $meta_key, $single)
     {
         global $wpdb;
+        //don't do this on the archive pages
+        if (is_archive() || is_home()){
+            return $metadata;
+        }
 
         // 1. inserting placeholder if no image is present 
+
 
         if ($meta_key === '_thumbnail_id') {
 
@@ -176,7 +181,7 @@ class rsed_alterContent
         }
 
         //don't do this on the archive pages
-        if (is_archive() || is_author() || is_category() || is_home() || is_tag()){
+        if (is_archive() || is_home()){
             return $title;
         }
 
@@ -249,17 +254,15 @@ class rsed_alterContent
 
     public function make_post_thumbnail_editable($html, $post_id, $post_thumbnail_id, $size, $attr)
     {
-        if (is_archive()) {
+        //don't do this on the archive pages
+        if (is_archive() || is_home()){
             return $html;
         }
 
         $img_html = $html;
 
         $html =
-        '<div class="gpp-image-container">' .
-        '<div class="gpp-cover-overlay"  >' .
-        '<i class="icon-picture"></i><br>' .
-        '</div>' .
+        '<div class="rsed-image-container">' .
         '<div id="postimagediv" class="postbox rsed_changecolor">' .
         '<div class="inside">' .
         '<a href="' . home_url() . '/wp-admin/media-upload.php?post_id=' . $post_id . '&type=image" id="set-post-thumbnail" class="thickbox">' .
