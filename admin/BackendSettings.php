@@ -1,5 +1,7 @@
 <?php
 
+defined( 'ABSPATH' ) or die( 'no access' );
+
 class rsed_BackendSettings
 {
 

@@ -1,5 +1,7 @@
 <?php
 
+defined( 'ABSPATH' ) or die( 'no access' );
+
 class rsed_alterContent
 {
 
@@ -58,11 +60,16 @@ class rsed_alterContent
 
         $this->identifier = 'main';
         $this->hasTinyMCE = true;
-        $editButtons = $this->get_template('editIcons.php');
 
-        $html_and_EditBtns = $editButtons . $html;
+        if (strpos($content, '[') && strpos($content, ']')) {
+            $addedHTML = $this->get_template('noShortCodes.php');
+        } else {
+            $addedHTML = $this->get_template('editIcons.php');
+        }
 
-        return apply_filters('rsed_editable_content_html', $html_and_EditBtns, $post_id);
+        $html = $addedHTML . $html;
+
+        return apply_filters('rsed_editable_content_html', $html, $post_id);
     }
 
     /*
@@ -189,6 +196,8 @@ class rsed_alterContent
             return $thumbnail_id;
         }
 
+        _log(454);
+
         $filepath = rsed_url . "/assets/images/placeholder.png";
         $filename = "placeholder.png";
 
@@ -245,8 +254,8 @@ class rsed_alterContent
         $img_html = $html;
 
         $html =
-        '<div class="gpp-image-container">' .
-        '<div class="gpp-cover-overlay"  >' .
+        '<div class="rsed-image-container">' .
+        '<div class="rsed-cover-overlay"  >' .
         '<i class="icon-picture"></i><br>' .
         '</div>' .
         '<div id="postimagediv" class="postbox rsed_changecolor">' .

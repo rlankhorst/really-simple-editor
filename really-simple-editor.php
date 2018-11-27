@@ -103,6 +103,9 @@ function rsed_delete_attachment_cleanup ($attachment_id) {
 
     $thumbnail_id = get_option("rsed_default_thumbnail_id");
 
+    _log($thumbnail_id);
+    _log($attachment_id);
+
     if ($thumbnail_id == $attachment_id) {
         delete_option('rsed_default_thumbnail_id');
     }
