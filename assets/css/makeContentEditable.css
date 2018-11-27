@@ -19,25 +19,32 @@
 }
 
 .rsed_editButtons{
-    width: 33px;
-    padding-left: 8px;
-    padding-right: 2px;
-    padding-top: 4px;
-    height: 31px;
-    cursor: pointer;
-    font-size: initial;
-    color: rgb(150, 150, 150);
+  width: 33px;
+  height: 27px;
+  line-height: 27px;
+  cursor: pointer;
+  font-size: 16px;
+  color: rgb(150, 150, 150);
+  margin-right: 0px;
+}
+
+.rsed_svg_icon {
+  width: 26px;
+  margin-top: 4px;
+  margin-left: 4px;
+  padding: 0;
 }
 
 .rsed_icons{
   display: flex;
   justify-content: center;
-  width: 110px;
+  width: 109px;
+  height: 35px;
   margin: 0 auto;
   background-color: rgba(234, 234, 234, 0.7);
   border-radius: 6px;
-  padding-top: 2px;
   border: 2px solid #d2d2d2;
+  box-sizing: border-box !important;
 }
 
 .rsed_icons_noTinyMCE{
@@ -82,21 +89,22 @@
 .rsed_saveText{
   position: absolute;
   top: 0px;
-  right: calc(50% - 145px);
-  font-size: 13px;
-  height: 37px;
-  width: 87px;
+  right: calc(50% - 148px);
+  font-size: 16px;
+  width: 91px;
   text-align: center;
   background-color: rgb(212, 255, 212);
   display: inline-block;
+  height: 35px;
   line-height: 35px;
   border-radius: 6px;
   border: 2px solid #b5e0c3;
   color: #118e11;
+  box-sizing: border-box !important; 
 }
 
 .rsed_noTinyMCE_text{
-  right: calc(50% - 131px);
+  right: calc(50% - 136px);
 }
 
 
@@ -127,13 +135,13 @@
   top: 50%;
   left: 50%;
   transform: translate( -50%, -50% );
-  font-size: 30px;
   background-color: #272727ba;
   border-radius: 6px;
   color: #fdfdfd;
   border: 0px solid #cacaca;
   padding: 8px 10px 0px 15px;
   display: inline-block;
+  height: 46px;
 }
 
 .rsed_editable {
@@ -157,16 +165,17 @@
   font-size: 14px;
   position: absolute;
   bottom: 5px;
-  right: calc(50% - 115px);
+  right: calc(50% - 180px);
   line-height: 35px;
-  font-weight: bold;
-  width: 224px;
+  width: 400px;
   text-align: center;
-  background-color:rgba(239, 239, 239, 0.7);
+  background-color: rgba(239, 239, 239, 0.7);
   border-radius: 6px;
   padding-top: 2px;
   border: 1px solid #e4e4e4;
-  
+  color: #856404;
+  background-color: #fff3cd;
+  border: 2px solid #ffeeba;
 }
 
 

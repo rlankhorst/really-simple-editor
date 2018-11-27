@@ -40,6 +40,12 @@ class rsed_alterContent
     public function addToContent($content)
     {
         global $post;
+
+        //don't do this on the archive pages
+        if (is_archive() || is_home()) {
+            return $content;
+        }
+
         if (!$post || !is_singular($post)) {
             return $content;
         }
@@ -78,7 +84,7 @@ class rsed_alterContent
     public function addToMeta($metadata, $object_id, $meta_key, $single)
     {
         global $wpdb;
-        //don't do this on the archive pages
+        // don't do this on the archive pages
         if (is_archive() || is_home()){
             return $metadata;
         }
@@ -181,14 +187,14 @@ class rsed_alterContent
 
     public function addToTitle ($title, $id) {
 
-        $currentPostID = get_the_ID();
-
-        if ($currentPostID != $id) {
+        // don't do this on the archive pages
+        if (is_archive() || is_home()) {
             return $title;
         }
 
-        //don't do this on the archive pages
-        if (is_archive() || is_home()){
+        $currentPostID = get_the_ID();
+
+        if ($currentPostID != $id) {
             return $title;
         }
 
@@ -272,7 +278,7 @@ class rsed_alterContent
         '<div class="rsed-image-container">' .
         '<div id="postimagediv" class="postbox rsed_changecolor">' .
         '<div class="inside">' .
-        '<a href="' . home_url() . '/wp-admin/media-upload.php?post_id=' . $post_id . '&type=image" id="set-post-thumbnail" class="thickbox">' .
+        '<a href="' . home_url() . '/wp-admin/media-upload.php?post_id=' . $post_id . '&type=image" id="set-post-thumbnail" class="thickbox rsed_imagelink">' .
             '<div class="edit-image">' .
             '</div>';
 

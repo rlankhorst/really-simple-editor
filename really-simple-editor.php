@@ -55,6 +55,7 @@ class rsed_Master {
 
     static public $alterContent;
     static public $BackendSettings;
+    static public $PopupWarning;
 
     function __construct() {
 
@@ -71,12 +72,17 @@ class rsed_Master {
 
         require_once 'core/alterContent.php';
         require_once 'admin/backendSettings.php';
+        require_once 'admin/popup_warning.php';
 
         if (  !is_admin() ) {
             rsed_Master::$alterContent  = new rsed_alterContent();
         }
 
         rsed_Master::$BackendSettings  = new rsed_BackendSettings();
+
+        if ( is_admin() ) {
+            rsed_Master::$PopupWarning = new PopupWarning();
+        }
 
     }
 
@@ -100,9 +106,6 @@ add_action('delete_attachment', 'rsed_delete_attachment_cleanup');
 function rsed_delete_attachment_cleanup ($attachment_id) {
 
     $thumbnail_id = get_option("rsed_default_thumbnail_id");
-
-    _log($thumbnail_id);
-    _log($attachment_id);
 
     if ($thumbnail_id == $attachment_id) {
         delete_option('rsed_default_thumbnail_id');

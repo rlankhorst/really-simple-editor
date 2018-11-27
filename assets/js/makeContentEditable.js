@@ -9,7 +9,8 @@ let focus;                   // string, possible values: main, title, meta_x
 let backupHTML = {};         // The original HTML of all fields before editing, first element is the main text, remainder are the meta elements
 let normalEditor = true;     // if true wysiwyg is shown else the tinyMCE editor
 const saveTime = 500;       // time in Ms when the changes are saved after the user is done typing
-let url;
+let url;                    // the current AJAX URL.
+let hasRemovedOtherTitleClasses = false  // for executing the function which removes classes only once
 
 
 jQuery(document).ready(() => {
@@ -31,8 +32,31 @@ jQuery(document).ready(() => {
         checkTitleforAnchorTags();
         checkIfPlaceholdersNeeded();
         thumbnail_show_EditableText();
+        removeNonValid_Img_links();
     }
 });
+
+
+// Whenever the theme shows pictures of other posts we want to remove the links to them
+function removeNonValid_Img_links() {
+    for (let link of document.querySelectorAll('a.rsed_imagelink')) {
+        const strBegin = Number(link.href.indexOf('_id=')) + 4;
+        const strEnd = link.href.indexOf('&type');
+
+        const idCurrentImage = link.href.substring(strBegin, strEnd);
+
+        const index = document.querySelector('#mainDiv').classList[1].indexOf('rsed_post_');
+        const currentPostID = document.querySelector('#mainDiv').classList[1].substring(index + 10);
+
+        if (idCurrentImage == currentPostID) {
+            continue;
+        }
+
+        const content = $(link).contents();
+        $(link).replaceWith(content);
+    }
+
+}
 
 
 function createBackup() {
@@ -80,6 +104,7 @@ function makeTitleEditable() {
     addEditableListener(`title`);
 }
 
+
 function addEditableListener(identifier) {
 
     let context;
@@ -116,22 +141,23 @@ function addEditableListener(identifier) {
 
     editableContent[context].addEventListener('click', editOnClickEvent);
 
-    function editOnClickEvent (event) {
+    function editOnClickEvent(event) {
 
         if (focus && focus !== context) {
             closeStyles(focus);
             selectNormalEditor(context.body);
             checkIfPlaceholdersNeeded();
         }
-    
+
         focus = context;
-    
+
         if (focus === 'title') {
             event.target.classList.add('rsed_title_of_post');
             editableContent[context] = document.querySelector('.rsed_title_of_post');
             $('.rsed_editButtons_title').insertBefore('.rsed_title_of_post');
+            removeOtherTitleClasses();
         }
-    
+
         if (focus === 'main') {
             if ($('#mainDiv').text() === window.rsed_translateStrings.edit_content) {
                 $('#mainDiv').text('');
@@ -148,7 +174,7 @@ function addEditableListener(identifier) {
                 $(`#rsed_${identifier}`).removeClass('rsed_textPlaceholder');
             }
         }
-    
+
         editableContent[context].classList.add('rsed_selected');
         editableContent[context].contentEditable = true;
         editButtons[context].style.display = 'block';
@@ -158,7 +184,30 @@ function addEditableListener(identifier) {
         }
     };
 
+    // When multiple title tags present this removes the rsed_title class of the non selected posts
+    function removeOtherTitleClasses() {
+
+        if (hasRemovedOtherTitleClasses) {
+            return;
+        }
+
+        for (let title of document.querySelectorAll('.rsed_title')) {
+
+            if (title.classList.contains('rsed_title_of_post')) {
+                continue;
+            }
+
+            title.classList.remove('rsed_title');
+            title.removeEventListener('click', editOnClickEvent);
+
+        }
+
+        hasRemovedOtherTitleClasses = true;
+
+    }
+
 }
+
 
 
 function closeEditMode(event) {
