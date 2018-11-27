@@ -1,6 +1,12 @@
 <?php
+defined( 'ABSPATH' ) or die( 'no access' );
 
-// field types which are supported by the plugin
+/*
+ *
+ * field types which are supported by the plugin
+ * These are fieldtypes from CMB2. If a theme uses CMB2 to include fields, these are supported.
+ *
+ */
 $rsed_field_types = [
     'title',
     'text',

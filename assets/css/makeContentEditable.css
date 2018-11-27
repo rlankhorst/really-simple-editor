@@ -127,12 +127,12 @@
   top: 50%;
   left: 50%;
   transform: translate( -50%, -50% );
-  font-size: 60px;
+  font-size: 30px;
   background-color: #272727ba;
-  border-radius: 17px;
+  border-radius: 6px;
   color: #fdfdfd;
-  border: 4px solid #cacaca;
-  padding: 8px 20px 0px 23px;
+  border: 0px solid #cacaca;
+  padding: 8px 10px 0px 15px;
   display: inline-block;
 }
 
@@ -140,14 +140,12 @@
   position: relative;
 }
 
-.rsed-image-container img[src$='placeholder.png'] {
+.rsed-image-container img[src='placeholder.png'] {
   background-color: #fbfbfb;
-  border-radius: 10px;
-  border: 5px solid #efefef;
 }
 
-.rsed_editSVG {
-  height: 60px;
+.rsed_editSVG{
+  height: 30px;
 }
 
 .rsed_noShortCode {
