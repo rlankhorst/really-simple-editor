@@ -33,7 +33,14 @@ class rsed_alterContent
                 'edit_meta' =>   __("Start typing the content..", "rsed"),
                 'edit_saving' =>  __("Saving...", "rsed"),
                 'edit_saved' =>  __("Saved", "rsed"),
-            ));
+            )
+        );
+        wp_localize_script(
+            'rsed_makeContentEditable',
+            'rsed_ajaxURL',
+            array('url' => admin_url('admin-ajax.php'))
+        );
+            
     }
 
     // adding a div to main content so we can manipulate it via javascript

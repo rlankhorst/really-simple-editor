@@ -15,8 +15,8 @@ let hasRemovedOtherTitleClasses = false  // for executing the function which rem
 
 jQuery(document).ready(() => {
 
-    if (window.ajaxurl) {
-        url = window.location.origin + window.ajaxurl;
+    if (window.rsed_ajaxURL) {
+        url = window.rsed_ajaxURL;
     }
 
     // initialize the functionality here
@@ -949,6 +949,5 @@ function checkTitleforAnchorTags() {
     }
 
 }
-
 
 // https://wordpress.org/plugins/advanced-custom-fields/

@@ -19,16 +19,40 @@ class PopupWarning
             return;
         }
 
+        $themeName = wp_get_theme()->name;
+
+        $compatible_themes = array(
+            'Twenty Fifteen',
+            'Twenty Sixteen',
+            'Twenty Seventeen',
+            'Customizr',
+            'Hueman',
+            'Oginer',
+            'Luzuk',
+            'LZ Food Recipee',
+            'Izrestaurant',
+            'Vantage',
+            'Virtue',
+        );
+
+        for ( $i = 0; $i < count($compatible_themes); $i++) {
+
+            if ($compatible_themes[$i] == $themeName) {
+                return;
+            }
+
+        }
+
         ?>
                 <div id="message" class="fade notice notice-warning is-dismissible">
                     <p>
-                        <?php printf(__('<span style="color:#008ec2" class="dashicons-before dashicons-info"></span> There is a small possibility that your current theme is not compatible with the Really Simple Editor Plugin', 'rsed'))?>
+                        <span style="color:#008ec2" class="dashicons-before dashicons-info"></span>&nbsp;<?php printf(__('Your current theme is not declared compatible yet, so we cannot guarantee 100%% compatibility with the Really Simple Editor Plugin. Is it working without issues? %sLet us know%s', 'rsed'), '<a href="https://really-simple-plugins.com/contact" target="blank">','</a>' )?>
                         <hr />
-                        <div style="color:#0073aa;cursor:pointer" class="rsed_popup_link">I understand, click here to don't show this message again</div>
+                        <div style="color:#0073aa;cursor:pointer" class="rsed_popup_link"><?php _e("I understand, click here to don't show this message again","rsed")?></div>
                     </p>
                 </div>
                 <?php
-}
+    }
     /**
      * Insert some ajax script to dismiss the review notice, and stop nagging about it
      */
@@ -53,13 +77,11 @@ class PopupWarning
                 });
             </script>
             <?php
-}
-    /**
-     * Process the ajax dismissal of the review message.
-     */
+    }
+
     public function dismiss_popup()
     {
-        // update_option('rsed_compatibility_popup_dismissed', 'yes');
+        update_option('rsed_compatibility_popup_dismissed', 'yes');
 
         wp_die();
     }
