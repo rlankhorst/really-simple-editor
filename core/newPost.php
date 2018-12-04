@@ -1,5 +1,7 @@
 <?php 
 
+defined( 'ABSPATH' ) or die( 'no access' );
+
 class rsed_newPost {
 
     function __construct() {
@@ -24,8 +26,6 @@ class rsed_newPost {
                 'publicly_queryable' => true,
             )
         );
-
-        _log($public_post_types);
 
         foreach ($all_toolbar_nodes as $toolBarItem_id => $toolBarItem ) {
 
@@ -67,8 +67,6 @@ class rsed_newPost {
             );
 
             $url = get_permalink($id);
-
-            _log($url);
 
             wp_redirect( $url );
             exit;

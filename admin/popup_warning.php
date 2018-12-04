@@ -33,6 +33,7 @@ class PopupWarning
             'Izrestaurant',
             'Vantage',
             'Virtue',
+            'Longform',
         );
 
         for ( $i = 0; $i < count($compatible_themes); $i++) {

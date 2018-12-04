@@ -1,8 +1,6 @@
 <?php
 defined( 'ABSPATH' ) or die( 'no access' );
 
-defined( 'ABSPATH' ) or die( 'no access' );
-
 class rsed_alterContent
 {
     private $metaID = 1; 

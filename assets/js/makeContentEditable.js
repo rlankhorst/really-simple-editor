@@ -26,7 +26,6 @@ jQuery(document).ready(() => {
 
 
         makeContentEditable();
-
         makeMetaEditable();
         makeTitleEditable();
         checkTitleforAnchorTags();
@@ -576,15 +575,17 @@ jQuery(document).ready(() => {
                 });
             }
 
-            // title autoSaving
-            document.querySelector(`.rsed_title`).addEventListener('keyup', () => {
+            
+            // title autoSaving, need to work on all possible titles
+            for (let title of document.querySelectorAll('.rsed_title')) {
+                title.addEventListener('keyup',  () => {
 
-                delay(() => {
-                    autoSave_title();
-                }, saveTime);
-
-            });
-
+                    delay(() => {
+                        autoSave_title();
+                    }, saveTime);
+    
+                });
+            }
 
         }, 1500);  // end setTimeout
 

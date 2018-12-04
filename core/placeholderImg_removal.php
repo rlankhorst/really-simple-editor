@@ -1,5 +1,7 @@
 <?php
 
+defined( 'ABSPATH' ) or die( 'no access' );
+
 add_action('delete_attachment', 'rsed_delete_attachment_cleanup');
 // Need to clear a option when a user removes the placeholder img, otherwise the img will not be reloaded.
 function rsed_delete_attachment_cleanup ($attachment_id) {
