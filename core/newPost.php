@@ -25,6 +25,8 @@ class rsed_newPost {
             )
         );
 
+        _log($public_post_types);
+
         foreach ($all_toolbar_nodes as $toolBarItem_id => $toolBarItem ) {
 
             if ($toolBarItem_id === 'new-user' || $toolBarItem_id === 'new-media') {
@@ -34,8 +36,8 @@ class rsed_newPost {
             $public_postType_bool = false;
             $post_type = substr($toolBarItem_id, 4);
             
-            for ($i = 0; $i < count($public_post_types); $i++) {
-                if ($post_type === $public_post_types[$i]) {
+            foreach ($public_post_types as $postTypeLoop) {
+                if ($post_type === $postTypeLoop) {
                     $public_postType_bool = true;
                 }
             }
