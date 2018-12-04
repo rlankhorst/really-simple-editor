@@ -59,15 +59,18 @@ class rsed_Master {
     static public $alterContent;
     static public $BackendSettings;
     static public $PopupWarning;
+    static public $newPost;
 
     function __construct() {
 
         require_once 'core/alterContent.php';
+        require_once 'core/newPost.php';
         require_once 'admin/backendSettings.php';
         require_once 'admin/popup_warning.php';
 
         if (  !is_admin() && current_user_can('edit_posts') && get_option('rsed_toggle_editor') != 'off' ) {
             rsed_Master::$alterContent  = new rsed_alterContent();
+            rsed_Master::$newPost = new rsed_newPost();
         }
 
         rsed_Master::$BackendSettings  = new rsed_BackendSettings();
@@ -81,20 +84,11 @@ class rsed_Master {
 }
 
 // plugin initializes here
-define('rsed_url', plugin_dir_url(__FILE__));
-define('rsed_path', plugin_dir_path(__FILE__));
-define('rsed_plugin', plugin_basename(__FILE__));
-define('rsed_plugin_file', __FILE__);
-
-define('rsed_js', rsed_url . '/assets/js/');
-define('rsed_css', rsed_url . '/assets/css/');
-
-require_once(ABSPATH.'wp-admin/includes/plugin.php');
-$rsed_plugin_data = get_plugin_data( __FILE__ );
-define('rsed_version', $rsed_plugin_data['Version'] );
-
+define('rsed_pluginFile', __FILE__);
+require_once 'core/constants.php';
 require_once 'core/switchOffEditor.php';
 require_once 'core/placeholderImg_removal.php';
+
 add_action( 'plugins_loaded', 'rsed_start_plugin', 9 ,1);
 
 function rsed_start_plugin () {

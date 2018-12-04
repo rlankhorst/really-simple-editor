@@ -18,6 +18,7 @@ class rsed_alterContent
         add_action('wp_enqueue_scripts', array($this, 'enqueue'));
         add_filter('post_thumbnail_html', array($this, 'make_post_thumbnail_editable'), 99, 5);
         add_filter('the_editor_content', array($this, 'add_editor_stylesheet'));
+        add_filter('edit_post_link', array($this, 'remove_edit_post_link'), 1, 5);
     }
 
     public function enqueue()
@@ -41,6 +42,12 @@ class rsed_alterContent
             array('url' => admin_url('admin-ajax.php'))
         );
             
+    }
+
+
+    // removing the standard edit links which are inserted in the front end:
+    public function remove_edit_post_link ($text) {
+        return '';
     }
 
     // adding a div to main content so we can manipulate it via javascript
