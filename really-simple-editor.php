@@ -65,7 +65,7 @@ class rsed_Master {
 
         require_once 'core/alterContent.php';
         require_once 'core/newPost.php';
-        require_once 'admin/backendSettings.php';
+        //require_once 'admin/backendSettings.php';
         require_once 'admin/popup_warning.php';
 
         if (  !is_admin() && current_user_can('edit_posts') && get_option('rsed_toggle_editor') != 'off' ) {
@@ -73,7 +73,7 @@ class rsed_Master {
             rsed_Master::$newPost = new rsed_newPost();
         }
 
-        rsed_Master::$BackendSettings  = new rsed_BackendSettings();
+        //rsed_Master::$BackendSettings  = new rsed_BackendSettings();
 
         if ( is_admin() ) {
             rsed_Master::$PopupWarning = new PopupWarning();
